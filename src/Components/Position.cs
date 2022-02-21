@@ -1,7 +1,7 @@
 using System.Numerics;
 using Raylib_CsLo;
 
-namespace ZombieEscape.Components
+namespace JustWind.Components
 {
     public class Position : Component
     {

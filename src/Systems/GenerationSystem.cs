@@ -1,8 +1,8 @@
-using ZombieEscape.Components;
-using ZombieEscape.Entities;
-using static ZombieEscape.Entities.EntityService;
+using JustWind.Components;
+using JustWind.Entities;
+using static JustWind.Entities.EntityService;
 
-namespace ZombieEscape.Systems
+namespace JustWind.Systems
 {
     public class GenerationSystem : Systems.System
     {

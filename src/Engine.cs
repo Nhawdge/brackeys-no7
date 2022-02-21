@@ -1,12 +1,12 @@
 using Raylib_CsLo;
-using ZombieEscape.Entities;
-using ZombieEscape.Systems;
-using ZombieEscape.Components;
+using JustWind.Entities;
+using JustWind.Systems;
+using JustWind.Components;
 
 public class Engine
 {
     public List<Entity> Entities = new List<Entity>();
-    public List<ZombieEscape.Systems.System> Systems = new List<ZombieEscape.Systems.System>();
+    public List<JustWind.Systems.System> Systems = new List<JustWind.Systems.System>();
     public Entity Singleton { get; set; }
 
     public Camera2D Camera { get; set; }
@@ -27,12 +27,14 @@ public class Engine
     }
     public void Run()
     {
-        Raylib.InitWindow(1280, 720, "Zombie Escape");
+        Raylib.InitWindow(1280, 720, "It's just the wind...");
         Raylib.SetTargetFPS(30);
-        Camera = new Camera2D();
-        var cam = Camera;
+
+        var cam = new Camera2D();
         cam.zoom = 1;
+        Camera = cam;
         /// WHYYYY ^
+        
         foreach (var system in Systems)
         {
             system.Load();

@@ -1,11 +1,6 @@
-using System.Numerics;
-using System.Collections.Generic;
-using ZombieEscape.Entities;
-using ZombieEscape.Components;
-using System;
-using System.Linq;
+using JustWind.Entities;
 
-namespace ZombieEscape.Systems
+namespace JustWind.Systems
 {
     public class ActionSystem : Systems.System
     {

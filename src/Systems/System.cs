@@ -1,7 +1,7 @@
 using System.Collections.Generic;
-using ZombieEscape.Entities;
+using JustWind.Entities;
 
-namespace ZombieEscape.Systems
+namespace JustWind.Systems
 {
     public abstract class System
     {

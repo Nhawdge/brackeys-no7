@@ -1,9 +1,6 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using ZombieEscape.Components;
+using JustWind.Components;
 
-namespace ZombieEscape.Entities
+namespace JustWind.Entities
 {
     public class Entity
     {
@@ -17,12 +14,14 @@ namespace ZombieEscape.Entities
         public T GetComponent<T>() where T : Component
         {
             return Components.OfType<T>().FirstOrDefault();
-
         }
         public IEnumerable<T> GetComponents<T>()
         {
-            var components = Components.Where(x => x.GetType() == typeof(T)).Select(x => (T)Convert.ChangeType(x, typeof(T)));
-            return components;
+            return Components.OfType<T>();
+        }
+        public bool HasTypes(params Type[] types)
+        {
+            return types.All(t => Components.Any(c => c.GetType() == t));
         }
     }
 }

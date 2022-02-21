@@ -2,10 +2,10 @@ using System.Collections;
 using System.Runtime.CompilerServices;
 using System.ComponentModel;
 using System.Collections.Generic;
-using ZombieEscape.Entities;
+using JustWind.Entities;
 using Raylib_CsLo;
 
-namespace ZombieEscape.Systems
+namespace JustWind.Systems
 {
     public class SoundSystem : System
     {

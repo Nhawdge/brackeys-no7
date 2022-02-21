@@ -1,10 +1,10 @@
 using System.Numerics;
 using System;
 using System.Collections.Generic;
-using ZombieEscape.Components;
-using ZombieEscape.Entities;
+using JustWind.Components;
+using JustWind.Entities;
 
-namespace ZombieEscape.Systems
+namespace JustWind.Systems
 {
     public class AiMovementSystem : Systems.System
     {

@@ -1,6 +1,6 @@
-using ZombieEscape.Entities;
+using JustWind.Entities;
 
-namespace ZombieEscape.Systems
+namespace JustWind.Systems
 {
     public class UiSystem : Systems.System
     {
@@ -14,6 +14,7 @@ namespace ZombieEscape.Systems
 
         public override void Update(List<Entity> allEntities)
         {
+
         }
     }
 }

@@ -1,4 +1,4 @@
-namespace ZombieEscape.Components
+namespace JustWind.Components
 {
     public abstract class Component
     {
