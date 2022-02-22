@@ -16,7 +16,7 @@ namespace JustWind.Systems
 
         public override void Load()
         {
-            backgroundTexture = LoadTexture("src/Assets/background.png");
+            backgroundTexture = LoadTexture("src/Assets/scene/scene_4096x4096.png");
         }
 
         public override void Update(List<Entity> allEntities)
@@ -27,17 +27,20 @@ namespace JustWind.Systems
             {
                 return;
             }
-            var bgSourceRect = new Rectangle(0, 0, Raylib.GetScreenWidth(), backgroundTexture.height);
+            var bgSourceRect = new Rectangle(0, 0, Raylib.GetScreenWidth(), Raylib.GetScreenHeight());
             var bgDestinationRect = new Rectangle(0, 0, Raylib.GetScreenWidth(), Raylib.GetScreenHeight());
             //Console.WriteLine($"{bgDestinationRect.width}, {bgDestinationRect.height}");
             DrawTexturePro(backgroundTexture, bgSourceRect, bgDestinationRect, new Vector2(0), 0f, Raylib.WHITE);
+
             foreach (var entity in allEntities)
             {
                 if (entity.HasTypes(typeof(Render), typeof(Position)))
                 {
                     var myRender = entity.GetComponent<Render>();
                     var myPosition = entity.GetComponent<Position>();
-                    DrawTexturePro(myRender.Texture, myRender.Rectangle, myPosition.Rectangle, new Vector2(0), 0f, Raylib.WHITE);
+
+                    DrawTexturePro(myRender.Texture, myRender.Rectangle, myPosition.Rectangle, myPosition.GetRectCenter(), myRender.Direction, Raylib.WHITE);
+                    //DrawCircle((int)myPosition.X, (int)myPosition.Y, 5f, Raylib.BLACK);
                 }
             }
         }

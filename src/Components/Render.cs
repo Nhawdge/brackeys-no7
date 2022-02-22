@@ -8,6 +8,7 @@ namespace JustWind.Components
         public Texture Texture { get; set; }
         public Rectangle Rectangle { get; set; }
         public bool IsAnimated { get; set; }
+        public float Direction { get; set; } = 0f;
         public Render(Texture texture)
         {
             Texture = texture;
@@ -20,7 +21,7 @@ namespace JustWind.Components
         }
         public Vector2 GetCenter()
         {
-            return new Vector2(Rectangle.x + Rectangle.width / 2, Rectangle.y + Rectangle.height / 2);
+            return new Vector2((Rectangle.width / 2), (Rectangle.height / 2));
         }
     }
 }

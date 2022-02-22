@@ -1,6 +1,9 @@
+using System.Security.Cryptography;
 using System.Numerics;
 using JustWind.Components;
 using JustWind.Entities;
+using static Raylib_CsLo.Raylib;
+using Raylib_CsLo;
 
 namespace JustWind.Systems
 {
@@ -18,27 +21,25 @@ namespace JustWind.Systems
         {
             var singleton = Engine.Singleton.GetComponent<Singleton>();
 
-            var player = allEntities.Find(x => x.HasTypes(typeof(Controllable), typeof(Position)));
+            var player = allEntities.Find(x => x.HasTypes(typeof(Controllable), typeof(Position), typeof(Render)));
             if (player != null)
             {
+                var myPosition = player.GetComponent<Position>();
+
                 if (Raylib_CsLo.Raylib.IsKeyDown(Raylib_CsLo.KeyboardKey.KEY_A))
                 {
-                    var myPosition = player.GetComponent<Position>();
                     myPosition.X -= myPosition.Speed;
                 }
                 if (Raylib_CsLo.Raylib.IsKeyDown(Raylib_CsLo.KeyboardKey.KEY_D))
                 {
-                    var myPosition = player.GetComponent<Position>();
                     myPosition.X += myPosition.Speed;
                 }
                 if (Raylib_CsLo.Raylib.IsKeyDown(Raylib_CsLo.KeyboardKey.KEY_W))
                 {
-                    var myPosition = player.GetComponent<Position>();
                     myPosition.Y -= myPosition.Speed;
                 }
                 if (Raylib_CsLo.Raylib.IsKeyDown(Raylib_CsLo.KeyboardKey.KEY_S))
                 {
-                    var myPosition = player.GetComponent<Position>();
                     myPosition.Y += myPosition.Speed;
                 }
 
@@ -46,6 +47,16 @@ namespace JustWind.Systems
                 {
                     //Bark
                 }
+
+                var mousePos = Raylib_CsLo.Raylib.GetMousePosition();
+                var myRender = player.GetComponent<Render>();
+
+                var offsetX = myPosition.X - mousePos.X;
+                var offsetY = myPosition.Y - mousePos.Y;
+
+                var directionInDegrees = Math.Atan2(offsetY, offsetX) * 180 / Math.PI - 90;
+
+                myRender.Direction = (float)directionInDegrees;
             }
         }
     }

@@ -22,6 +22,7 @@ public class Engine
         Systems.Add(new SoundSystem(this));
         Systems.Add(new StateManagerSystem(this));
         Systems.Add(new AnimationSystem(this));
+        Systems.Add(new CameraSystem(this));
 
         var singleton = new Entity();
         singleton.Components.Add(new Singleton { State = GameState.Menu });

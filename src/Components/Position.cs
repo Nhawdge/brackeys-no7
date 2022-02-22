@@ -14,17 +14,23 @@ namespace JustWind.Components
 
         public Rectangle Rectangle
         {
-            get
-            {
-                return new Rectangle(X, Y, Width, Height);
-            }
+            get => new Rectangle(X, Y, Width, Height);
+        }
+
+        public Rectangle RectCenter
+        {
+            get => new Rectangle(X - Width / 2, Y - Height / 2, Width, Height);
         }
 
         public Vector2 AsVector() => new Vector2(X, Y);
+        
         public Vector2 GetCenter()
         {
             return new Vector2(X + (Width / 2), Y + (Height / 2));
         }
-
+        public Vector2 GetRectCenter()
+        {
+            return new Vector2(Width / 2, Height / 2);
+        }
     }
 }
