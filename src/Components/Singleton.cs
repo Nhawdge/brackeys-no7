@@ -10,5 +10,8 @@ namespace JustWind.Components
     {
         Menu,
         Game,
+        MenuHowToPlay,
+        MenuCredits,
+        Exit
     }
 }

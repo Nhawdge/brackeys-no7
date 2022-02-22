@@ -16,6 +16,8 @@ namespace JustWind.Systems
 
         public override void Update(List<Entity> allEntities)
         {
+            var singleton = Engine.Singleton.GetComponent<Singleton>();
+
             var player = allEntities.Find(x => x.HasTypes(typeof(Controllable), typeof(Position)));
             if (player != null)
             {

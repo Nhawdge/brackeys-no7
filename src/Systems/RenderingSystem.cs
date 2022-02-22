@@ -21,6 +21,12 @@ namespace JustWind.Systems
 
         public override void Update(List<Entity> allEntities)
         {
+            var singleton = Engine.Singleton.GetComponent<Singleton>();
+
+            if (singleton.State != GameState.Game)
+            {
+                return;
+            }
             var bgSourceRect = new Rectangle(0, 0, Raylib.GetScreenWidth(), backgroundTexture.height);
             var bgDestinationRect = new Rectangle(0, 0, Raylib.GetScreenWidth(), Raylib.GetScreenHeight());
             //Console.WriteLine($"{bgDestinationRect.width}, {bgDestinationRect.height}");

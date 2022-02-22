@@ -20,9 +20,11 @@ public class Engine
         Systems.Add(new ControllableSystem(this));
         Systems.Add(new ActionSystem(this));
         Systems.Add(new SoundSystem(this));
+        Systems.Add(new StateManagerSystem(this));
+        Systems.Add(new AnimationSystem(this));
 
         var singleton = new Entity();
-        singleton.Components.Add(new Singleton());
+        singleton.Components.Add(new Singleton { State = GameState.Menu });
         Singleton = singleton;
     }
     public void Run()
@@ -34,7 +36,7 @@ public class Engine
         cam.zoom = 1;
         Camera = cam;
         /// WHYYYY ^
-        
+
         foreach (var system in Systems)
         {
             system.Load();

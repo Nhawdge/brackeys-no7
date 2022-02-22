@@ -16,6 +16,7 @@ namespace JustWind.Systems
 
         public override void Update(List<Entity> allEntities)
         {
+            var singleton = Engine.Singleton.GetComponent<Singleton>();
 
         }
 

@@ -1,11 +1,10 @@
-using JustWind.Components;
 using JustWind.Entities;
 
 namespace JustWind.Systems
 {
-    public class ActionSystem : Systems.System
+    public class AnimationSystem : JustWind.Systems.System
     {
-        public ActionSystem(Engine engine) : base(engine)
+        public AnimationSystem(Engine engine) : base(engine)
         {
         }
 
@@ -15,8 +14,7 @@ namespace JustWind.Systems
 
         public override void Update(List<Entity> allEntities)
         {
-            var singleton = Engine.Singleton.GetComponent<Singleton>();
- 
+            
         }
     }
 }

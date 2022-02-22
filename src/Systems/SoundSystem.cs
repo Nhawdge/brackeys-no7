@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Collections.Generic;
 using JustWind.Entities;
 using Raylib_CsLo;
+using JustWind.Components;
 
 namespace JustWind.Systems
 {
@@ -23,6 +24,8 @@ namespace JustWind.Systems
 
         public override void Update(List<Entity> allEntities)
         {
+            var singleton = Engine.Singleton.GetComponent<Singleton>();
+
             Raylib.UpdateMusicStream(BackgroundMusic);
         }
     }

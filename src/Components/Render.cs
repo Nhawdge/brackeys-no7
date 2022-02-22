@@ -7,9 +7,9 @@ namespace JustWind.Components
     {
         public Texture Texture { get; set; }
         public Rectangle Rectangle { get; set; }
-
+        public bool IsAnimated { get; set; }
         public Render(Texture texture)
-        {            
+        {
             Texture = texture;
             Rectangle = new Rectangle(0, 0, Texture.width, Texture.height);
         }
