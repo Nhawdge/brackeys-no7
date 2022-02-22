@@ -1,5 +1,8 @@
+using System.Numerics;
 using JustWind.Components;
 using JustWind.Entities;
+using Raylib_CsLo;
+using static Raylib_CsLo.Raylib;
 
 namespace JustWind.Systems
 {
@@ -16,13 +19,21 @@ namespace JustWind.Systems
         public override void Update(List<Entity> allEntities)
         {
             var singleton = Engine.Singleton.GetComponent<Singleton>();
-            if (singleton.State != GameState.Game)
+            if (singleton.State == GameState.Game)
             {
+                var mousePos = Raylib.GetScreenToWorld2D(Raylib.GetMousePosition(), Engine.Camera);
+
                 var player = allEntities.FirstOrDefault(x => x.HasTypes(typeof(Controllable)));
                 if (player != null)
                 {
                     var playerPos = player.GetComponent<Position>();
-                    Engine.Camera = Engine.Camera with { target = playerPos.AsVector() };
+                    var xdiff = (playerPos.X - mousePos.X) * 0.25;
+                    var ydiff = (playerPos.Y - mousePos.Y) * 0.25;
+
+                    var x = playerPos.X - xdiff;
+                    var y = playerPos.Y - ydiff;
+
+                    Engine.Camera = Engine.Camera with { target = new Vector2((float)x, (float)y), offset = new Vector2(GetScreenWidth() / 2, GetScreenHeight() / 2) };
                 }
             }
         }

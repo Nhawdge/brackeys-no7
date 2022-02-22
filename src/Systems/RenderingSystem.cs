@@ -27,8 +27,8 @@ namespace JustWind.Systems
             {
                 return;
             }
-            var bgSourceRect = new Rectangle(0, 0, Raylib.GetScreenWidth(), Raylib.GetScreenHeight());
-            var bgDestinationRect = new Rectangle(0, 0, Raylib.GetScreenWidth(), Raylib.GetScreenHeight());
+            var bgSourceRect = new Rectangle(0, 0, backgroundTexture.width, backgroundTexture.height);
+            var bgDestinationRect = new Rectangle(0, 0, backgroundTexture.width, backgroundTexture.height);
             //Console.WriteLine($"{bgDestinationRect.width}, {bgDestinationRect.height}");
             DrawTexturePro(backgroundTexture, bgSourceRect, bgDestinationRect, new Vector2(0), 0f, Raylib.WHITE);
 

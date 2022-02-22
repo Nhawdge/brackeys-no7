@@ -36,6 +36,7 @@ public class Engine
         var cam = new Camera2D();
         cam.zoom = 1;
         Camera = cam;
+        
         /// WHYYYY ^
 
         foreach (var system in Systems)

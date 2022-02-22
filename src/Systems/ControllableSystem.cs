@@ -1,4 +1,3 @@
-using System.Security.Cryptography;
 using System.Numerics;
 using JustWind.Components;
 using JustWind.Entities;
@@ -26,29 +25,29 @@ namespace JustWind.Systems
             {
                 var myPosition = player.GetComponent<Position>();
 
-                if (Raylib_CsLo.Raylib.IsKeyDown(Raylib_CsLo.KeyboardKey.KEY_A))
+                if (Raylib.IsKeyDown(KeyboardKey.KEY_A))
                 {
                     myPosition.X -= myPosition.Speed;
                 }
-                if (Raylib_CsLo.Raylib.IsKeyDown(Raylib_CsLo.KeyboardKey.KEY_D))
+                if (Raylib.IsKeyDown(KeyboardKey.KEY_D))
                 {
                     myPosition.X += myPosition.Speed;
                 }
-                if (Raylib_CsLo.Raylib.IsKeyDown(Raylib_CsLo.KeyboardKey.KEY_W))
+                if (Raylib.IsKeyDown(KeyboardKey.KEY_W))
                 {
                     myPosition.Y -= myPosition.Speed;
                 }
-                if (Raylib_CsLo.Raylib.IsKeyDown(Raylib_CsLo.KeyboardKey.KEY_S))
+                if (Raylib.IsKeyDown(KeyboardKey.KEY_S))
                 {
                     myPosition.Y += myPosition.Speed;
                 }
 
-                if (Raylib_CsLo.Raylib.IsKeyDown(Raylib_CsLo.KeyboardKey.KEY_SPACE))
+                if (Raylib.IsKeyDown(KeyboardKey.KEY_SPACE))
                 {
                     //Bark
                 }
 
-                var mousePos = Raylib_CsLo.Raylib.GetMousePosition();
+                var mousePos = Raylib.GetScreenToWorld2D(Raylib.GetMousePosition(), Engine.Camera);
                 var myRender = player.GetComponent<Render>();
 
                 var offsetX = myPosition.X - mousePos.X;
