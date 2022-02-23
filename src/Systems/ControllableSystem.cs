@@ -3,6 +3,7 @@ using JustWind.Components;
 using JustWind.Entities;
 using static Raylib_CsLo.Raylib;
 using Raylib_CsLo;
+using JustWind.Helpers;
 
 namespace JustWind.Systems
 {
@@ -24,36 +25,44 @@ namespace JustWind.Systems
             if (player != null)
             {
                 var myPosition = player.GetComponent<Position>();
+                var futurePos = new Vector2(0);
 
                 if (Raylib.IsKeyDown(KeyboardKey.KEY_A))
                 {
-                    myPosition.X -= myPosition.Speed;
+                    futurePos.X -= myPosition.Speed;
                 }
                 if (Raylib.IsKeyDown(KeyboardKey.KEY_D))
                 {
-                    myPosition.X += myPosition.Speed;
+                    futurePos.X += myPosition.Speed;
                 }
                 if (Raylib.IsKeyDown(KeyboardKey.KEY_W))
                 {
-                    myPosition.Y -= myPosition.Speed;
+                    futurePos.Y -= myPosition.Speed;
                 }
                 if (Raylib.IsKeyDown(KeyboardKey.KEY_S))
                 {
-                    myPosition.Y += myPosition.Speed;
+                    futurePos.Y += myPosition.Speed;
                 }
 
-                if (Raylib.IsKeyDown(KeyboardKey.KEY_SPACE))
+                if (futurePos.X != 0 || futurePos.Y != 0)
                 {
-                    //Bark
+                    var futureAngle = (float)Math.Atan2(futurePos.Y, futurePos.X);
+
+                    myPosition.X += (int)(Math.Cos(futureAngle) * myPosition.Speed);
+                    myPosition.Y += (int)(Math.Sin(futureAngle) * myPosition.Speed);
                 }
 
+                if (Raylib.IsMouseButtonPressed(MOUSE_LEFT_BUTTON)))
+                {
+                    var action = new Act() { Action = Actions.Bark };
+                }
                 var mousePos = Raylib.GetScreenToWorld2D(Raylib.GetMousePosition(), Engine.Camera);
                 var myRender = player.GetComponent<Render>();
 
                 var offsetX = myPosition.X - mousePos.X;
                 var offsetY = myPosition.Y - mousePos.Y;
 
-                var directionInDegrees = Math.Atan2(offsetY, offsetX) * 180 / Math.PI - 90;
+                var directionInDegrees = Math.Atan2(offsetY, offsetX).ToDegrees() - 90;
 
                 myRender.Direction = (float)directionInDegrees;
             }
