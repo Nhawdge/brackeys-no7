@@ -13,8 +13,6 @@ public class Engine
 
     public Engine()
     {
-        Systems.Add(new RenderingSystem(this));
-        Systems.Add(new UiSystem(this));
         Systems.Add(new GenerationSystem(this));
         Systems.Add(new AiMovementSystem(this));
         Systems.Add(new ControllableSystem(this));
@@ -23,6 +21,8 @@ public class Engine
         Systems.Add(new StateManagerSystem(this));
         Systems.Add(new AnimationSystem(this));
         Systems.Add(new CameraSystem(this));
+        Systems.Add(new RenderingSystem(this));
+        Systems.Add(new UiSystem(this));
 
         var singleton = new Entity();
         singleton.Components.Add(new Singleton { State = GameState.Menu });
@@ -36,7 +36,7 @@ public class Engine
         var cam = new Camera2D();
         cam.zoom = 1;
         Camera = cam;
-        
+
         /// WHYYYY ^
 
         foreach (var system in Systems)

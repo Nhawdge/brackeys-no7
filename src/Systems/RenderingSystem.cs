@@ -13,20 +13,33 @@ namespace JustWind.Systems
         }
 
         public Texture backgroundTexture { get; set; }
+        public Texture MenuTexture { get; set; }
 
         public override void Load()
         {
             backgroundTexture = LoadTexture("src/Assets/scene/scene_4096x4096.png");
+            MenuTexture = LoadTexture("src/Assets/scene/cover.png");
         }
 
         public override void Update(List<Entity> allEntities)
         {
             var singleton = Engine.Singleton.GetComponent<Singleton>();
 
+
+            if (singleton.State == GameState.Menu)
+            {
+                var bgMenuSourceRect = new Rectangle(0, 0, backgroundTexture.width, backgroundTexture.height);
+                var bgMenuDestinationRect = new Rectangle(0, 0, Raylib.GetScreenWidth(), Raylib.GetScreenHeight());
+                //Console.WriteLine($"{bgDestinationRect.width}, {bgDestinationRect.height}");
+                DrawTexturePro(MenuTexture, bgMenuSourceRect, bgMenuDestinationRect, new Vector2(0), 0f, Raylib.WHITE);
+                return;
+            }
+
             if (singleton.State != GameState.Game)
             {
                 return;
             }
+
             var bgSourceRect = new Rectangle(0, 0, backgroundTexture.width, backgroundTexture.height);
             var bgDestinationRect = new Rectangle(0, 0, backgroundTexture.width, backgroundTexture.height);
             //Console.WriteLine($"{bgDestinationRect.width}, {bgDestinationRect.height}");

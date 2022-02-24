@@ -76,7 +76,7 @@ namespace JustWind.Systems
             {
                 var rect = new Rectangle(100, 100, GetScreenWidth() - 200, GetScreenHeight() - 200);
                 RayGui.GuiPanel(rect);
-                RayGui.GuiTextBox(rect, "Coding - John Pavek - @nhawdge\nArt - Aaron", 72, false);
+                RayGui.GuiTextBox(rect, "Coding - John Pavek - @nhawdge\nArt - Aaron - @AaronJLael", 72, false);
 
                 var backRect = new Rectangle(GetScreenWidth() - 50, 10, MeasureText("Back", 20), 20);
                 RayGui.GuiTextBox(backRect, "Back", 20, false);

@@ -26,21 +26,45 @@ namespace JustWind.Systems
             {
                 var myAct = actor.GetComponent<Act>();
                 var myState = actor.GetComponent<State>();
+                var currentAnimation = actor.GetComponent<Animation>();
+                CharacterState newState;
                 if (myAct != null)
                 {
                     switch (myAct.Action)
                     {
                         case Actions.Bark:
-                            myState.CurrentState = CharacterState.Bark;
+                            newState = CharacterState.Bark;
                             break;
                         case Actions.Growl:
-                            myState.CurrentState = CharacterState.Growl;
+                            newState = CharacterState.Growl;
+                            break;
+                        default:
+                            newState = CharacterState.Idle;
                             break;
                     }
                 }
                 else
                 {
-                    myState.CurrentState = CharacterState.Idle;
+                    newState = CharacterState.Idle;
+                }
+
+                if (myState.CurrentState != newState)
+                {
+                    Console.WriteLine($"{actor.Id} is {newState}, was {myState.CurrentState}");
+                    switch (newState)
+                    {
+                        case CharacterState.Bark:
+                            currentAnimation.Animations = AnimationData.DogBark;
+                            break;
+                        case CharacterState.Growl:
+                            currentAnimation.Animations = AnimationData.DogGrowl;
+                            break;
+                        case CharacterState.Idle:
+                        default:
+                            currentAnimation.Animations = AnimationData.DogWag;
+                            break;
+                    }
+                    myState.CurrentState = newState;
                 }
             }
         }

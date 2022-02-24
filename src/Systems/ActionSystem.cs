@@ -21,7 +21,7 @@ namespace JustWind.Systems
             foreach (var actor in actionables)
             {
                 var action = actor.GetComponent<Act>();
-                Console.WriteLine("Action: " + action.Action);
+                //Console.WriteLine("Action: " + action.Action);
                 action.Duration--;
 
                 if (action.Duration <= 0)

@@ -27,18 +27,28 @@ namespace JustWind.Systems
                 var myRender = entity.GetComponent<Render>();
                 myAnimation.Counter++;
 
-                var currentFrame = myAnimation.Animations.ElementAt(myAnimation.CurrentIndex).Value;
-                if (myAnimation.Counter > currentFrame.Delay)
+                //Console.WriteLine($"Total Frames: {myAnimation.Animations.Count()}");
+                if (myAnimation.Animations.Count() > 0)
                 {
-                    myAnimation.Counter = 0;
-                    myAnimation.CurrentIndex++;
-                    var totalFrames = myAnimation.Animations.Count();
+                    var currentFrame = myAnimation.Animations.ElementAtOrDefault(myAnimation.CurrentIndex).Value;
 
-                    if (myAnimation.CurrentIndex >= totalFrames)
+                    if (currentFrame == null)
                     {
-                        myAnimation.CurrentIndex = 0;
+                        currentFrame = myAnimation.Animations.First().Value;
                     }
-                    myRender.Texture = myAnimation.Animations.ElementAt(myAnimation.CurrentIndex).Value.Texture;
+
+                    if (myAnimation.Counter > currentFrame.Delay)
+                    {
+                        myAnimation.Counter = 0;
+                        myAnimation.CurrentIndex++;
+                        var totalFrames = myAnimation.Animations.Count();
+
+                        if (myAnimation.CurrentIndex >= totalFrames)
+                        {
+                            myAnimation.CurrentIndex = 0;
+                        }
+                        myRender.Texture = myAnimation.Animations.ElementAt(myAnimation.CurrentIndex).Value.Texture;
+                    }
                 }
             }
         }

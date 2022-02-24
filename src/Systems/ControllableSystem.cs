@@ -20,6 +20,10 @@ namespace JustWind.Systems
         public override void Update(List<Entity> allEntities)
         {
             var singleton = Engine.Singleton.GetComponent<Singleton>();
+            if (singleton.State != GameState.Game)
+            {
+                return;
+            }
 
             var player = allEntities.Find(x => x.HasTypes(typeof(Controllable), typeof(Position), typeof(Render)));
             if (player != null)
@@ -57,11 +61,23 @@ namespace JustWind.Systems
                     var currentAct = player.GetComponent<Act>();
                     if (currentAct == null)
                     {
-                        var action = new Act() { Action = Actions.Bark, Duration = 100 };
+                        var action = new Act() { Action = Actions.Bark, Duration = 50 };
 
                         player.Components.Add(action);
                     }
                 }
+
+                if (Raylib.IsMouseButtonPressed(MOUSE_RIGHT_BUTTON))
+                {
+                    var currentAct = player.GetComponent<Act>();
+                    if (currentAct == null)
+                    {
+                        var action = new Act() { Action = Actions.Growl, Duration = 100 };
+
+                        player.Components.Add(action);
+                    }
+                }
+                
                 var mousePos = Raylib.GetScreenToWorld2D(Raylib.GetMousePosition(), Engine.Camera);
                 var myRender = player.GetComponent<Render>();
 
