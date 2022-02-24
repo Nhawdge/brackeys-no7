@@ -20,8 +20,29 @@ namespace JustWind.Systems
             {
                 return;
             }
-            
 
+            var actionables = allEntities.FindAll(x => x.HasTypes(typeof(State)));
+            foreach (var actor in actionables)
+            {
+                var myAct = actor.GetComponent<Act>();
+                var myState = actor.GetComponent<State>();
+                if (myAct != null)
+                {
+                    switch (myAct.Action)
+                    {
+                        case Actions.Bark:
+                            myState.CurrentState = CharacterState.Bark;
+                            break;
+                        case Actions.Growl:
+                            myState.CurrentState = CharacterState.Growl;
+                            break;
+                    }
+                }
+                else
+                {
+                    myState.CurrentState = CharacterState.Idle;
+                }
+            }
         }
     }
 }

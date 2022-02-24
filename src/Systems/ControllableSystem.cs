@@ -52,9 +52,15 @@ namespace JustWind.Systems
                     myPosition.Y += (int)(Math.Sin(futureAngle) * myPosition.Speed);
                 }
 
-                if (Raylib.IsMouseButtonPressed(MOUSE_LEFT_BUTTON)))
+                if (Raylib.IsMouseButtonPressed(MOUSE_LEFT_BUTTON))
                 {
-                    var action = new Act() { Action = Actions.Bark };
+                    var currentAct = player.GetComponent<Act>();
+                    if (currentAct == null)
+                    {
+                        var action = new Act() { Action = Actions.Bark, Duration = 100 };
+
+                        player.Components.Add(action);
+                    }
                 }
                 var mousePos = Raylib.GetScreenToWorld2D(Raylib.GetMousePosition(), Engine.Camera);
                 var myRender = player.GetComponent<Render>();

@@ -16,7 +16,19 @@ namespace JustWind.Systems
         public override void Update(List<Entity> allEntities)
         {
             var singleton = Engine.Singleton.GetComponent<Singleton>();
- 
+            var actionables = allEntities.FindAll(x => x.HasTypes(typeof(Act)));
+
+            foreach (var actor in actionables)
+            {
+                var action = actor.GetComponent<Act>();
+                Console.WriteLine("Action: " + action.Action);
+                action.Duration--;
+
+                if (action.Duration <= 0)
+                {
+                    actor.Components.Remove(action);
+                }
+            }
         }
     }
 }
