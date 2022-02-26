@@ -5,9 +5,9 @@ namespace JustWind.Components
 {
     public class Animation : Component
     {
-        public Dictionary<int, Frame> Animations { get; set; } = new();
-        public int Counter { get; set; }
-        public int CurrentIndex { get; set; }
+        public Dictionary<int, Frame> Animations = new();
+        public int Counter;
+        public int CurrentIndex;
     }
 
     public record Frame(Texture Texture, int Delay);

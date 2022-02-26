@@ -2,7 +2,7 @@ namespace JustWind.Components
 {
     public class State : Component
     {
-        public CharacterState CurrentState { get; set; } = CharacterState.Idle;
+        public CharacterState CurrentState = CharacterState.Idle;
     }
 
     public enum CharacterState
@@ -12,6 +12,5 @@ namespace JustWind.Components
         Bark,
         Growl,
         Sleep,
-
     }
 }

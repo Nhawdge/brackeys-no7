@@ -5,10 +5,10 @@ namespace JustWind.Components
 {
     public class Render : Component
     {
-        public Texture Texture { get; set; }
-        public Rectangle Rectangle { get; set; }
-        public bool IsAnimated { get; set; }
-        public float Direction { get; set; } = 0f;
+        public Texture Texture;
+        public Rectangle Rectangle;
+        public bool IsAnimated;
+        public float Direction = 0f;
         public Render(Texture texture)
         {
             Texture = texture;

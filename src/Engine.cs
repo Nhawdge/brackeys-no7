@@ -7,9 +7,8 @@ public class Engine
 {
     public List<Entity> Entities = new List<Entity>();
     public List<JustWind.Systems.System> Systems = new List<JustWind.Systems.System>();
-    public Entity Singleton { get; set; }
-
-    public Camera2D Camera { get; set; }
+    public Entity Singleton;
+    public Camera2D Camera;
 
     public Engine()
     {
@@ -33,11 +32,8 @@ public class Engine
         Raylib.InitWindow(1280, 720, "It's just the wind...");
         Raylib.SetTargetFPS(30);
 
-        var cam = new Camera2D();
-        cam.zoom = 1;
-        Camera = cam;
-
-        /// WHYYYY ^
+        Camera = new Camera2D();
+        Camera.zoom = 1;
 
         foreach (var system in Systems)
         {

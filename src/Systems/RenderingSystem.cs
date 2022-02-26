@@ -12,8 +12,8 @@ namespace JustWind.Systems
         {
         }
 
-        public Texture backgroundTexture { get; set; }
-        public Texture MenuTexture { get; set; }
+        public Texture backgroundTexture;
+        public Texture MenuTexture;
 
         public override void Load()
         {
@@ -25,12 +25,10 @@ namespace JustWind.Systems
         {
             var singleton = Engine.Singleton.GetComponent<Singleton>();
 
-
             if (singleton.State == GameState.Menu)
             {
                 var bgMenuSourceRect = new Rectangle(0, 0, backgroundTexture.width, backgroundTexture.height);
                 var bgMenuDestinationRect = new Rectangle(0, 0, Raylib.GetScreenWidth(), Raylib.GetScreenHeight());
-                //Console.WriteLine($"{bgDestinationRect.width}, {bgDestinationRect.height}");
                 DrawTexturePro(MenuTexture, bgMenuSourceRect, bgMenuDestinationRect, new Vector2(0), 0f, Raylib.WHITE);
                 return;
             }
@@ -42,7 +40,6 @@ namespace JustWind.Systems
 
             var bgSourceRect = new Rectangle(0, 0, backgroundTexture.width, backgroundTexture.height);
             var bgDestinationRect = new Rectangle(0, 0, backgroundTexture.width, backgroundTexture.height);
-            //Console.WriteLine($"{bgDestinationRect.width}, {bgDestinationRect.height}");
             DrawTexturePro(backgroundTexture, bgSourceRect, bgDestinationRect, new Vector2(0), 0f, Raylib.WHITE);
 
             foreach (var entity in allEntities)
@@ -53,7 +50,6 @@ namespace JustWind.Systems
                     var myPosition = entity.GetComponent<Position>();
 
                     DrawTexturePro(myRender.Texture, myRender.Rectangle, myPosition.Rectangle, myPosition.GetRectCenter(), myRender.Direction, Raylib.WHITE);
-                    //DrawCircle((int)myPosition.X, (int)myPosition.Y, 5f, Raylib.BLACK);
                 }
             }
         }
