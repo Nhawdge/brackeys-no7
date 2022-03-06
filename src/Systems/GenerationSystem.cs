@@ -22,8 +22,6 @@ namespace JustWind.Systems
             if (allEnemies.Count() < 1)
             {
                 Engine.Entities.Add(CreateRandomEnemy());
-                Engine.Entities.Add(CreateRandomEnemy());
-                Engine.Entities.Add(CreateRandomEnemy());
             }
         }
     }

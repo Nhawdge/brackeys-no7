@@ -48,7 +48,6 @@ namespace JustWind.Systems
                         var myPosition = entity.GetComponent<Position>();
 
                         DrawTexturePro(myRender.Texture, myRender.Rectangle, myPosition.Rectangle, myPosition.GetRectCenter(), myRender.Direction, Raylib.WHITE);
-                        //Console.WriteLine($"{entity.Id}[{myRender.Texture.id}] at {myPosition.Rectangle.X}, {myPosition.Rectangle.Y}");
                         DrawText($"{entity.ShortId()}", myPosition.Rectangle.X, myPosition.Rectangle.Y, 20, Raylib.BLACK);
                     }
                 }

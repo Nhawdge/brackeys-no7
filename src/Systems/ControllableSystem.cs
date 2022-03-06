@@ -65,6 +65,9 @@ namespace JustWind.Systems
 
                         player.Components.Add(action);
                     }
+                    var myRender2 = player.GetComponent<Render>();
+                    Console.WriteLine($"{player.Id}[{myRender2.Texture.id}] at {myPosition.Rectangle.X}, {myPosition.Rectangle.Y}");
+
                 }
 
                 if (Raylib.IsMouseButtonPressed(MOUSE_RIGHT_BUTTON))
@@ -77,7 +80,7 @@ namespace JustWind.Systems
                         player.Components.Add(action);
                     }
                 }
-                
+
                 var mousePos = Raylib.GetScreenToWorld2D(Raylib.GetMousePosition(), Engine.Camera);
                 var myRender = player.GetComponent<Render>();
 

@@ -32,7 +32,7 @@ namespace JustWind.Entities
             entity.Components.Add(new Render());
 
             entity.Components.Add(new State());
-            entity.Components.Add(new EnemyAi());
+            entity.Components.Add(new EnemyAi(PathData.SideWalk));
 
             return entity;
         }
