@@ -16,10 +16,10 @@ namespace JustWind.Systems
         }
         public override void Load()
         {
-            Raylib.InitAudioDevice();
-            BackgroundMusic = Raylib.LoadMusicStream("src/assets/background.wav");
-            Raylib.SetMusicVolume(BackgroundMusic, 0.1f);
-            Raylib.PlayMusicStream(BackgroundMusic);
+            // Raylib.InitAudioDevice();
+            // BackgroundMusic = Raylib.LoadMusicStream("src/assets/background.wav");
+            // Raylib.SetMusicVolume(BackgroundMusic, 0.1f);
+            // Raylib.PlayMusicStream(BackgroundMusic);
         }
 
         public override void Update(List<Entity> allEntities)

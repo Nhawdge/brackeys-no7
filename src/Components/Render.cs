@@ -19,6 +19,14 @@ namespace JustWind.Components
             Texture = Raylib.LoadTexture(path);
             Rectangle = new Rectangle(0, 0, Texture.width, Texture.height);
         }
+        public Render()
+        {
+
+        }
+        public void UpdateRect()
+        {
+            Rectangle = new Rectangle(0, 0, Texture.width, Texture.height);
+        }
         public Vector2 GetCenter()
         {
             return new Vector2((Rectangle.width / 2), (Rectangle.height / 2));

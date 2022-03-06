@@ -18,7 +18,13 @@ namespace JustWind.Systems
         public override void Update(List<Entity> allEntities)
         {
             var singleton = Engine.Singleton.GetComponent<Singleton>();
-
+            var allEnemies = allEntities.Where(x => x.HasTypes(typeof(EnemyAi)));
+            if (allEnemies.Count() < 1)
+            {
+                Engine.Entities.Add(CreateRandomEnemy());
+                Engine.Entities.Add(CreateRandomEnemy());
+                Engine.Entities.Add(CreateRandomEnemy());
+            }
         }
     }
 }

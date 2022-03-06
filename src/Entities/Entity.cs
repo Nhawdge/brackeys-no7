@@ -11,6 +11,7 @@ namespace JustWind.Entities
         }
         public Guid Id { get; init; }
 
+        public string ShortId() => this.Id.ToString().Substring(0, 4);
         public T GetComponent<T>() where T : Component
         {
             return Components.OfType<T>().FirstOrDefault();

@@ -33,23 +33,24 @@ namespace JustWind.Systems
                 return;
             }
 
-            if (singleton.State != GameState.Game)
+            if (singleton.State == GameState.Game)
             {
-                return;
-            }
 
-            var bgSourceRect = new Rectangle(0, 0, backgroundTexture.width, backgroundTexture.height);
-            var bgDestinationRect = new Rectangle(0, 0, backgroundTexture.width, backgroundTexture.height);
-            DrawTexturePro(backgroundTexture, bgSourceRect, bgDestinationRect, new Vector2(0), 0f, Raylib.WHITE);
+                var bgSourceRect = new Rectangle(0, 0, backgroundTexture.width, backgroundTexture.height);
+                var bgDestinationRect = new Rectangle(0, 0, backgroundTexture.width, backgroundTexture.height);
+                DrawTexturePro(backgroundTexture, bgSourceRect, bgDestinationRect, new Vector2(0), 0f, Raylib.WHITE);
 
-            foreach (var entity in allEntities)
-            {
-                if (entity.HasTypes(typeof(Render), typeof(Position)))
+                foreach (var entity in allEntities)
                 {
-                    var myRender = entity.GetComponent<Render>();
-                    var myPosition = entity.GetComponent<Position>();
+                    if (entity.HasTypes(typeof(Render), typeof(Position)))
+                    {
+                        var myRender = entity.GetComponent<Render>();
+                        var myPosition = entity.GetComponent<Position>();
 
-                    DrawTexturePro(myRender.Texture, myRender.Rectangle, myPosition.Rectangle, myPosition.GetRectCenter(), myRender.Direction, Raylib.WHITE);
+                        DrawTexturePro(myRender.Texture, myRender.Rectangle, myPosition.Rectangle, myPosition.GetRectCenter(), myRender.Direction, Raylib.WHITE);
+                        //Console.WriteLine($"{entity.Id}[{myRender.Texture.id}] at {myPosition.Rectangle.X}, {myPosition.Rectangle.Y}");
+                        DrawText($"{entity.ShortId()}", myPosition.Rectangle.X, myPosition.Rectangle.Y, 20, Raylib.BLACK);
+                    }
                 }
             }
         }

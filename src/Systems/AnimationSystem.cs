@@ -48,6 +48,7 @@ namespace JustWind.Systems
                             myAnimation.CurrentIndex = 0;
                         }
                         myRender.Texture = myAnimation.Animations.ElementAt(myAnimation.CurrentIndex).Value.Texture;
+                        myRender.UpdateRect();
                     }
                 }
             }
