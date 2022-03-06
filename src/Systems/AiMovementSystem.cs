@@ -17,19 +17,25 @@ namespace JustWind.Systems
 
         public override void Update(List<Entity> allEntities)
         {
+            var rand = new Random();
             var singleton = Engine.Singleton.GetComponent<Singleton>();
             if (singleton.State == GameState.Game)
             {
-
+                var entitiesToRemove = new List<Entity>();
                 foreach (var entity in allEntities)
                 {
-                    if (!entity.HasTypes(typeof(Position), typeof(EnemyAi)))
+                    if (!entity.HasTypes(typeof(Position), typeof(EnemyAi), typeof(Animation)))
                     {
                         continue;
                     }
                     var myPosition = entity.GetComponent<Position>();
                     var myAi = entity.GetComponent<EnemyAi>();
-
+                    if (myAi.Scariness == 0)
+                    {
+                        myAi.Scariness = -1;
+                        var myAnimation = entity.GetComponent<Animation>();
+                        myAnimation.Animations = AnimationData.EnemyOptions.ElementAt(rand.Next(0, AnimationData.EnemyOptions.Count));
+                    }
                     if (myAi.NextTarget == new Vector2(0) && myAi.Path != null)
                     {
                         myAi.NextTarget = myAi.Path[myAi.NextIndex];
@@ -39,7 +45,15 @@ namespace JustWind.Systems
                         myAi.NextIndex++;
                         if (myAi.NextIndex >= myAi.Path.Count)
                         {
-                            myAi.NextIndex = 0;
+                            if (myAi.PathLoops && myAi.Scariness > 1)
+                            {
+                                myAi.NextIndex = 0;
+                            }
+                            else
+                            {
+                                entitiesToRemove.Add(entity);
+                                continue;
+                            }
                         }
                         myAi.NextTarget = myAi.Path[myAi.NextIndex];
                     }
@@ -51,6 +65,10 @@ namespace JustWind.Systems
                     myPosition.Y += (int)(Math.Sin(angle) * myAi.Speed);
                     //Console.WriteLine($"{myPosition.X}, {myPosition.Y},{angle} {myAi.NextTarget.X}, {myAi.NextTarget.Y}");
                     //Console.WriteLine($"Path: {myAi.Path[0]}, {myAi.NextIndex}, target: {myAi.NextTarget.X}, {myAi.NextTarget.Y}");
+                }
+                foreach (var removed in entitiesToRemove)
+                {
+                    allEntities.Remove(removed);
                 }
             }
         }

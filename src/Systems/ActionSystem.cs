@@ -1,5 +1,8 @@
+using System.Data;
+using System.Reflection;
 using JustWind.Components;
 using JustWind.Entities;
+using static JustWind.Helpers.MathHelpers;
 
 namespace JustWind.Systems
 {
@@ -23,6 +26,21 @@ namespace JustWind.Systems
                 var action = actor.GetComponent<Act>();
                 //Console.WriteLine("Action: " + action.Action);
                 action.Duration--;
+                var myPosition = actor.GetComponent<Position>();
+
+                var nearestTarget = allEntities.Where(x => x.HasTypes(typeof(EnemyAi), typeof(Position)))
+                    .OrderBy(x => DistanceBetween(x.GetComponent<Position>().AsVector(), myPosition.AsVector())).FirstOrDefault();
+
+                if (nearestTarget != null)
+                {
+                    var targetPosition = nearestTarget.GetComponent<Position>();
+                    if (DistanceBetween(targetPosition.AsVector(), myPosition.AsVector()) < 250)
+                    {
+                        var targetAi = nearestTarget.GetComponent<EnemyAi>();
+                        targetAi.Scariness -= 1;
+                        Console.WriteLine("Reducing scariness!");
+                    }
+                }
 
                 if (action.Duration <= 0)
                 {

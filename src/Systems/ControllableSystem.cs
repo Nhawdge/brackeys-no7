@@ -87,7 +87,7 @@ namespace JustWind.Systems
                 var offsetX = myPosition.X - mousePos.X;
                 var offsetY = myPosition.Y - mousePos.Y;
 
-                var directionInDegrees = Math.Atan2(offsetY, offsetX).ToDegrees() - 90;
+                var directionInDegrees = Math.Atan2(offsetY, offsetX).ToDegrees();
 
                 myRender.Direction = (float)directionInDegrees;
             }
