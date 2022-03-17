@@ -61,13 +61,12 @@ namespace JustWind.Systems
                     var currentAct = player.GetComponent<Act>();
                     if (currentAct == null)
                     {
-                        var action = new Act() { Action = Actions.Bark, Duration = 50 };
+                        var action = new Act() { Action = Actions.Bark, Duration = 30, Damage = 100 / 30 };
 
                         player.Components.Add(action);
                     }
                     var myRender2 = player.GetComponent<Render>();
                     Console.WriteLine($"{player.Id}[{myRender2.Texture.id}] at {myPosition.Rectangle.X}, {myPosition.Rectangle.Y}");
-
                 }
 
                 if (Raylib.IsMouseButtonPressed(MOUSE_RIGHT_BUTTON))
@@ -75,8 +74,7 @@ namespace JustWind.Systems
                     var currentAct = player.GetComponent<Act>();
                     if (currentAct == null)
                     {
-                        var action = new Act() { Action = Actions.Growl, Duration = 100 };
-
+                        var action = new Act() { Action = Actions.Growl, Duration = 120, Damage = 75 / 120 };
                         player.Components.Add(action);
                     }
                 }

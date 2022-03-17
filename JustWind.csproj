@@ -10,5 +10,16 @@
   <ItemGroup>
     <PackageReference Include="raylib-cslo" Version="4.0.0" />
   </ItemGroup>
-
+ <ItemGroup>
+    <None Update="src/Assets/**/*.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+    </None>
+  </ItemGroup>
+   <ItemGroup>
+    <None Update="src/Assets/**/*.wav">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+    </None>
+  </ItemGroup>
 </Project>

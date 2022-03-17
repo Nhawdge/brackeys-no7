@@ -1,6 +1,4 @@
 using System.Numerics;
-using System;
-using System.Collections.Generic;
 using JustWind.Components;
 using JustWind.Entities;
 using static JustWind.Helpers.MathHelpers;
@@ -22,12 +20,8 @@ namespace JustWind.Systems
             if (singleton.State == GameState.Game)
             {
                 var entitiesToRemove = new List<Entity>();
-                foreach (var entity in allEntities)
+                foreach (var entity in allEntities.Where(entity => entity.HasTypes(typeof(Position), typeof(EnemyAi), typeof(Animation))))
                 {
-                    if (!entity.HasTypes(typeof(Position), typeof(EnemyAi), typeof(Animation)))
-                    {
-                        continue;
-                    }
                     var myPosition = entity.GetComponent<Position>();
                     var myAi = entity.GetComponent<EnemyAi>();
                     if (myAi.Scariness == 0)
@@ -63,8 +57,6 @@ namespace JustWind.Systems
                     myRender.Direction = angle.ToDegrees();
                     myPosition.X += (int)(Math.Cos(angle) * myAi.Speed);
                     myPosition.Y += (int)(Math.Sin(angle) * myAi.Speed);
-                    //Console.WriteLine($"{myPosition.X}, {myPosition.Y},{angle} {myAi.NextTarget.X}, {myAi.NextTarget.Y}");
-                    //Console.WriteLine($"Path: {myAi.Path[0]}, {myAi.NextIndex}, target: {myAi.NextTarget.X}, {myAi.NextTarget.Y}");
                 }
                 foreach (var removed in entitiesToRemove)
                 {

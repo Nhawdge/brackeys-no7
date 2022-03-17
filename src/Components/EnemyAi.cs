@@ -10,7 +10,7 @@ namespace JustWind.Components
         public int NextIndex = 0;
         public bool PathLoops = true;
 
-        public int Scariness = 100;
+        public int Scariness = 225;
 
         public EnemyAi()
         {

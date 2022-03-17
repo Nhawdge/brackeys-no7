@@ -27,7 +27,8 @@ namespace JustWind.Systems
 
             if (singleton.State == GameState.Menu)
             {
-                var bgMenuSourceRect = new Rectangle(0, 0, backgroundTexture.width, backgroundTexture.height);
+                var bgMenuSourceRect = new Rectangle(0, 0, MenuTexture.width, MenuTexture.height);
+                //Console.WriteLine(Raylib.GetScreenWidth());
                 var bgMenuDestinationRect = new Rectangle(0, 0, Raylib.GetScreenWidth(), Raylib.GetScreenHeight());
                 DrawTexturePro(MenuTexture, bgMenuSourceRect, bgMenuDestinationRect, new Vector2(0), 0f, Raylib.WHITE);
                 return;
@@ -35,7 +36,6 @@ namespace JustWind.Systems
 
             if (singleton.State == GameState.Game)
             {
-
                 var bgSourceRect = new Rectangle(0, 0, backgroundTexture.width, backgroundTexture.height);
                 var bgDestinationRect = new Rectangle(0, 0, backgroundTexture.width, backgroundTexture.height);
                 DrawTexturePro(backgroundTexture, bgSourceRect, bgDestinationRect, new Vector2(0), 0f, Raylib.WHITE);
@@ -48,7 +48,10 @@ namespace JustWind.Systems
                         var myPosition = entity.GetComponent<Position>();
 
                         DrawTexturePro(myRender.Texture, myRender.Rectangle, myPosition.Rectangle, myPosition.GetRectCenter(), myRender.Direction - 90, Raylib.WHITE);
-                        DrawText($"{entity.ShortId()}", myPosition.Rectangle.X, myPosition.Rectangle.Y, 20, Raylib.BLACK);
+                        //DrawText($"{entity.ShortId()}", myPosition.Rectangle.X, myPosition.Rectangle.Y, 20, Raylib.BLACK);
+                        //DrawCircle((int)myPosition.Rectangle.X, (int)myPosition.Rectangle.Y, 500f, Raylib.GREEN);
+                        //DrawCircle((int)myPosition.Rectangle.X, (int)myPosition.Rectangle.Y, 400f, Raylib.YELLOW);
+                        //DrawCircle((int)myPosition.Rectangle.X, (int)myPosition.Rectangle.Y, 200f, Raylib.RED);
                     }
                 }
             }

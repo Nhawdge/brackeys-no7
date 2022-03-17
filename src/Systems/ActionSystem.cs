@@ -24,21 +24,38 @@ namespace JustWind.Systems
             foreach (var actor in actionables)
             {
                 var action = actor.GetComponent<Act>();
-                //Console.WriteLine("Action: " + action.Action);
                 action.Duration--;
                 var myPosition = actor.GetComponent<Position>();
 
-                var nearestTarget = allEntities.Where(x => x.HasTypes(typeof(EnemyAi), typeof(Position)))
-                    .OrderBy(x => DistanceBetween(x.GetComponent<Position>().AsVector(), myPosition.AsVector())).FirstOrDefault();
-
-                if (nearestTarget != null)
+                if (action.Action == Actions.Growl)
                 {
-                    var targetPosition = nearestTarget.GetComponent<Position>();
-                    if (DistanceBetween(targetPosition.AsVector(), myPosition.AsVector()) < 250)
+                    var nearestTarget = allEntities.Where(x => x.HasTypes(typeof(EnemyAi), typeof(Position)))
+                        .OrderBy(x => DistanceBetween(x.GetComponent<Position>().AsVector(), myPosition.AsVector())).FirstOrDefault();
+
+                    if (nearestTarget != null)
                     {
+                        var targetPosition = nearestTarget.GetComponent<Position>();
                         var targetAi = nearestTarget.GetComponent<EnemyAi>();
-                        targetAi.Scariness -= 1;
-                        Console.WriteLine("Reducing scariness!");
+                        var distancebetween = DistanceBetween(targetPosition.AsVector(), myPosition.AsVector());
+
+                        //   0 - 250 = 100%
+                        // 250 - 500 = 75%
+                        // 500 - 750 = 50%
+                        if (distancebetween < 200)
+                        {
+                            targetAi.Scariness -= action.Damage;
+                            Console.WriteLine("Full damage");
+                        }
+                        else if (distancebetween < 400)
+                        {
+                            targetAi.Scariness -= (int)(action.Damage * .75f);
+                            Console.WriteLine("75% damage");
+                        }
+                        else if (distancebetween < 500)
+                        {
+                            targetAi.Scariness -= (int)(action.Damage * .5f);
+                            Console.WriteLine("50% damage");
+                        }
                     }
                 }
 

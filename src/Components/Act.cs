@@ -7,6 +7,7 @@ namespace JustWind.Components
     {
         public Actions Action { get; set; }
         public int Duration { get; set; }
+        public int Damage { get; set; }
     }
 
     public enum Actions
