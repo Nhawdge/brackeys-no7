@@ -23,9 +23,9 @@ jobs:
     - name: Upload a Build Artifact
       uses: actions/upload-artifact@v3.0.0
       with:
-        name: JustWind-${{ github.ref_name }}
+        name: JustWind2-${{ github.ref_name }}
         path: bin/Release/net6.0/win-x64/publish/*
     - name: GH Release
       uses: softprops/action-gh-release@v0.1.14
       with:
-        files: JustWind-${{ github.ref_name }}.zip
+        files: JustWind2-${{ github.ref_name }}.zip
