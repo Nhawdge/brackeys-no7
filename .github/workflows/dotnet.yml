@@ -20,12 +20,12 @@ jobs:
       run: dotnet restore
     - name: Publish 
       run: dotnet publish -c Release -r win-x64 --self-contained true -p:PublishSingleFile=true -p:IncludeAllContentForSelfExtract=true
-    - name: Upload a Build Artifact
-      uses: actions/upload-artifact@v3.0.0
-      with:
-        name: JustWind-${{ github.ref_name }}
-        path: bin/Release/net6.0/win-x64/publish/*
+    - name: Easy Zip Files 
+      uses: vimtor/action-zip@v1
+      with:    
+        files: bin/Release/net6.0/win-x64/publish/*
+        dest:  JustWind-${{ github.ref_name }}.zip
     - name: GH Release
       uses: softprops/action-gh-release@v0.1.14
       with:
-        files: '**/JustWind-${{ github.ref_name }}*'
+        files: 'JustWind-${{ github.ref_name }}*'
