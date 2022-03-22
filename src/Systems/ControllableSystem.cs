@@ -74,7 +74,7 @@ namespace JustWind.Systems
                     var currentAct = player.GetComponent<Act>();
                     if (currentAct == null)
                     {
-                        var action = new Act() { Action = Actions.Growl, Duration = 120, Damage = 75 / 120 };
+                        var action = new Act() { Action = Actions.Growl, Duration = 120, Damage = 120 / 120 };
                         player.Components.Add(action);
                     }
                 }

@@ -27,12 +27,17 @@ namespace JustWind.Systems
                 action.Duration--;
                 var myPosition = actor.GetComponent<Position>();
 
+                if (action.Action == Actions.Bark){
+                var target =  allEntities.Where(x => x.HasTypes(typeof(EnemyAi), typeof(Position)));
+                
+                }
+
                 if (action.Action == Actions.Growl)
                 {
-                    var nearestTarget = allEntities.Where(x => x.HasTypes(typeof(EnemyAi), typeof(Position)))
-                        .OrderBy(x => DistanceBetween(x.GetComponent<Position>().AsVector(), myPosition.AsVector())).FirstOrDefault();
+                    var nearestTargets = allEntities.Where(x => x.HasTypes(typeof(EnemyAi), typeof(Position)))
+                        .OrderBy(x => DistanceBetween(x.GetComponent<Position>().AsVector(), myPosition.AsVector()));
 
-                    if (nearestTarget != null)
+                    foreach(var nearestTarget in nearestTargets)
                     {
                         var targetPosition = nearestTarget.GetComponent<Position>();
                         var targetAi = nearestTarget.GetComponent<EnemyAi>();
@@ -44,7 +49,7 @@ namespace JustWind.Systems
                         if (distancebetween < 200)
                         {
                             targetAi.Scariness -= action.Damage;
-                            Console.WriteLine("Full damage");
+                            Console.WriteLine($"Full damage {action.Damage}");
                         }
                         else if (distancebetween < 400)
                         {
