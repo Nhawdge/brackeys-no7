@@ -26,8 +26,7 @@ dotnet publish -c Release -r win-x64 --self-contained true -p:PublishSingleFile=
 * [ ] House Safety level
 * [ ] Round ending
 * [ ] Pause/Exit
-aaronlael.github.io: also, add localizations for Finland
-aaronlael.github.io: so you can have Finnish Growl and Finnish Bark
+* [ ]  also, add localizations for Finland so you can have Finnish Growl and Finnish Bark
 
 **Art**:
 
