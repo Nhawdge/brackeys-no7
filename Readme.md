@@ -31,4 +31,4 @@ aaronlael.github.io: so you can have Finnish Growl and Finnish Bark
 
 **Art**:
 
-* [ ] dog_bark Transparency issue 
+* [x] dog_bark Transparency issue 
