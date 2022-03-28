@@ -66,7 +66,12 @@ namespace JustWind.Systems
                         player.Components.Add(action);
                     }
                     var myRender2 = player.GetComponent<Render>();
-                    Console.WriteLine($"{player.Id}[{myRender2.Texture.id}] at {myPosition.Rectangle.X}, {myPosition.Rectangle.Y}");
+                 }
+
+                var mousePos = Raylib.GetScreenToWorld2D(Raylib.GetMousePosition(), Engine.Camera);
+
+                if (Raylib.IsKeyDown(KeyboardKey.KEY_SPACE)){
+                    Console.WriteLine($"Mouse at {mousePos.X}, {mousePos.Y}");
                 }
 
                 if (Raylib.IsMouseButtonPressed(MOUSE_RIGHT_BUTTON))
@@ -77,9 +82,9 @@ namespace JustWind.Systems
                         var action = new Act() { Action = Actions.Growl, Duration = 120, Damage = 120 / 120 };
                         player.Components.Add(action);
                     }
+
                 }
 
-                var mousePos = Raylib.GetScreenToWorld2D(Raylib.GetMousePosition(), Engine.Camera);
                 var myRender = player.GetComponent<Render>();
 
                 var offsetX = myPosition.X - mousePos.X;

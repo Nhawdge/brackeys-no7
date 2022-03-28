@@ -12,6 +12,8 @@ namespace JustWind.Systems
 
         public override void Load()
         {
+            Engine.Entities.Add(CreateWaterDish());
+            Engine.Entities.Add(CreateFoodDish());
             Engine.Entities.Add(CreatePlayer());
         }
 

@@ -37,5 +37,26 @@ namespace JustWind.Entities
 
             return entity;
         }
+
+        public static Entity CreateWaterDish()
+        {
+            var entity = new Entity();
+            var rand = new Random();
+
+            entity.Components.Add(new Render("src/Assets/scene/bowl_water_full.png"));
+            entity.Components.Add(new Position { X = 2850, Y = 3400, Speed = 5, Width = 256, Height = 256 });
+
+            return entity;
+        }
+        public static Entity CreateFoodDish()
+        {
+            var entity = new Entity();
+            var rand = new Random();
+
+            entity.Components.Add(new Render("src/Assets/scene/bowl_food_full.png"));
+            entity.Components.Add(new Position { X = 3050, Y = 3400, Speed = 5, Width = 256, Height = 256 });
+
+            return entity;
+        }
     }
 }
