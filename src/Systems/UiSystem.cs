@@ -1,4 +1,5 @@
 using System.ComponentModel;
+using System.Numerics;
 using JustWind.Components;
 using JustWind.Entities;
 using Raylib_CsLo;
@@ -55,7 +56,7 @@ namespace JustWind.Systems
                     }
                 }
             }
-            else if (singleton.State == GameState.MenuHowToPlay)
+            if (singleton.State == GameState.MenuHowToPlay)
             {
                 var rect = new Rectangle(100, 100, GetScreenWidth() - 200, GetScreenHeight() - 200);
                 RayGui.GuiPanel(rect);
@@ -72,7 +73,7 @@ namespace JustWind.Systems
                     }
                 }
             }
-            else if (singleton.State == GameState.MenuCredits)
+            if (singleton.State == GameState.MenuCredits)
             {
                 var rect = new Rectangle(100, 100, GetScreenWidth() - 200, GetScreenHeight() - 200);
                 RayGui.GuiPanel(rect);
@@ -88,11 +89,43 @@ namespace JustWind.Systems
                     }
                 }
             }
-            else if (singleton.State == GameState.Exit)
+            if (singleton.State == GameState.Exit)
             {
                 Raylib.EndDrawing();
                 Raylib.CloseWindow();
                 Environment.Exit(0);
+            }
+            if (singleton.State == GameState.Game)
+            {
+                var corner = new Vector2((GetScreenWidth() - 75), 10);
+                var offset = GetScreenToWorld2D(corner, Engine.Camera);
+
+                var pauseRect = new Rectangle(corner.X, corner.Y, 60, 25);
+                RayGui.GuiButton(pauseRect, "[P]aws");
+                if (Raylib.IsMouseButtonPressed(Raylib.MOUSE_LEFT_BUTTON))
+                {
+                    if (Raylib.CheckCollisionPointRec(mousePos, pauseRect))
+                    {
+                        singleton.State = GameState.Paused;
+                    }
+                }
+            }
+            else if (singleton.State == GameState.Paused)
+            {
+                var center = new Vector2((GetScreenWidth() / 2 - 100), GetScreenHeight() / 2 - 25);
+                var offset = GetWorldToScreen2D(center, Engine.Camera);
+
+                var resumeRect = new Rectangle((GetScreenWidth() / 2 - 100), GetScreenHeight() / 2 - 100, 200, 50);
+                RayGui.GuiButton(resumeRect, "Resume");
+
+
+                if (Raylib.IsMouseButtonPressed(Raylib.MOUSE_LEFT_BUTTON))
+                {
+                    if (Raylib.CheckCollisionPointRec(mousePos, resumeRect))
+                    {
+                        singleton.State = GameState.Game;
+                    }
+                }
             }
         }
     }

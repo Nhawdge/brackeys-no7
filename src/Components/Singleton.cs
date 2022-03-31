@@ -12,6 +12,7 @@ namespace JustWind.Components
         Game,
         MenuHowToPlay,
         MenuCredits,
+        Paused,
         Exit
     }
 }

@@ -14,6 +14,8 @@ namespace JustWind.Systems
         {
             Engine.Entities.Add(CreateWaterDish());
             Engine.Entities.Add(CreateFoodDish());
+            Engine.Entities.Add(CreateWestFence());
+
             Engine.Entities.Add(CreatePlayer());
         }
 

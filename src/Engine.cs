@@ -7,6 +7,7 @@ public class Engine
 {
     public List<Entity> Entities = new List<Entity>();
     public List<JustWind.Systems.System> Systems = new List<JustWind.Systems.System>();
+    public List<JustWind.Systems.System> NoCameraSystems = new List<JustWind.Systems.System>();
     public Entity Singleton;
     public Camera2D Camera;
 
@@ -21,7 +22,8 @@ public class Engine
         Systems.Add(new AnimationSystem(this));
         Systems.Add(new CameraSystem(this));
         Systems.Add(new RenderingSystem(this));
-        Systems.Add(new UiSystem(this));
+        
+        NoCameraSystems.Add(new UiSystem(this));
 
         var singleton = new Entity();
         singleton.Components.Add(new Singleton { State = GameState.Menu });
@@ -31,6 +33,9 @@ public class Engine
     {
         Raylib.InitWindow(1280, 720, "It's just the wind...");
         Raylib.SetTargetFPS(30);
+        Raylib.SetWindowIcon(Raylib.LoadImage("src/Assets/menu/icon.png"));
+        //Raylib.SetWindowState(ConfigFlags.FLAG_WINDOW_UNDECORATED);
+        Raylib.SetWindowState(ConfigFlags.FLAG_WINDOW_RESIZABLE);
 
         Camera = new Camera2D();
         Camera.zoom = 1;
@@ -60,6 +65,12 @@ public class Engine
         }
 
         Raylib.EndMode2D();
+
+        foreach (var system in NoCameraSystems)
+        {
+            system.Update(Entities);
+        }
+
         Raylib.EndDrawing();
     }
 }

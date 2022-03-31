@@ -33,7 +33,9 @@ namespace JustWind.Systems
                     var x = playerPos.X - xdiff;
                     var y = playerPos.Y - ydiff;
 
-                    Engine.Camera = Engine.Camera with { target = new Vector2((float)x, (float)y), offset = new Vector2(GetScreenWidth() / 2, GetScreenHeight() / 2) };
+                    Engine.Camera = Engine.Camera with { 
+                        target = new Vector2((float)x, (float)y), 
+                        offset = new Vector2(GetScreenWidth() / 2, GetScreenHeight() / 2) };
                 }
             }
         }
