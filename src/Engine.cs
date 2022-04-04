@@ -15,6 +15,8 @@ public class Engine
     {
         Systems.Add(new GenerationSystem(this));
         Systems.Add(new AiMovementSystem(this));
+        Systems.Add(new HouseSafetySystem(this));
+        Systems.Add(new SoundSystem(this));
         Systems.Add(new ControllableSystem(this));
         Systems.Add(new ActionSystem(this));
         Systems.Add(new SoundSystem(this));
@@ -22,7 +24,7 @@ public class Engine
         Systems.Add(new AnimationSystem(this));
         Systems.Add(new CameraSystem(this));
         Systems.Add(new RenderingSystem(this));
-        
+
         NoCameraSystems.Add(new UiSystem(this));
 
         var singleton = new Entity();
@@ -32,6 +34,7 @@ public class Engine
     public void Run()
     {
         Raylib.InitWindow(1280, 720, "It's just the wind...");
+
         Raylib.SetTargetFPS(30);
         Raylib.SetWindowIcon(Raylib.LoadImage("src/Assets/menu/icon.png"));
         //Raylib.SetWindowState(ConfigFlags.FLAG_WINDOW_UNDECORATED);
@@ -41,6 +44,10 @@ public class Engine
         Camera.zoom = 1;
 
         foreach (var system in Systems)
+        {
+            system.Load();
+        }
+        foreach (var system in NoCameraSystems)
         {
             system.Load();
         }

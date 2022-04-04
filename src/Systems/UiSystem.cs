@@ -9,12 +9,16 @@ namespace JustWind.Systems
 {
     public class UiSystem : Systems.System
     {
+        public Texture MenuTexture;
+
         public UiSystem(Engine engine) : base(engine)
         {
         }
 
         public override void Load()
         {
+            MenuTexture = LoadTexture("src/Assets/scene/cover.png");
+
         }
 
         public override void Update(List<Entity> allEntities)
@@ -24,6 +28,8 @@ namespace JustWind.Systems
             var singleton = Engine.Singleton.GetComponent<Singleton>();
             if (singleton.State == GameState.Menu)
             {
+                DrawBackground();
+
                 var startRect = new Rectangle((GetScreenWidth() / 2 - 100), GetScreenHeight() / 2 - 100, 200, 50);
                 RayGui.GuiButton(startRect, "Start");
 
@@ -109,15 +115,25 @@ namespace JustWind.Systems
                         singleton.State = GameState.Paused;
                     }
                 }
+                var percent = ((float)singleton.HouseSafety / (float)singleton.MaxHouseSafety);
+                var textToDraw = (percent * 100).ToString("0.0");
+                var width = percent * 200;
+
+                DrawRectangle(GetScreenWidth() / 2 - 105, 5, 210, 30, Raylib.BLACK);
+                DrawRectangle(GetScreenWidth() / 2 - 100, 10, (int)width, 20, Raylib.RED);
+                DrawText($"{textToDraw}", (GetScreenWidth() / 2) - (MeasureText(textToDraw, 12) / 2), 10, 20, Raylib.WHITE);
+
             }
             else if (singleton.State == GameState.Paused)
             {
-                var center = new Vector2((GetScreenWidth() / 2 - 100), GetScreenHeight() / 2 - 25);
-                var offset = GetWorldToScreen2D(center, Engine.Camera);
-
                 var resumeRect = new Rectangle((GetScreenWidth() / 2 - 100), GetScreenHeight() / 2 - 100, 200, 50);
                 RayGui.GuiButton(resumeRect, "Resume");
 
+                var mainMenuRect = new Rectangle((GetScreenWidth() / 2 - 100), GetScreenHeight() / 2 + 0, 200, 50);
+                RayGui.GuiButton(mainMenuRect, "Main Menu");
+
+                var exitRect = new Rectangle((GetScreenWidth() / 2 - 100), GetScreenHeight() / 2 + 100, 200, 50);
+                RayGui.GuiButton(exitRect, "Exit");
 
                 if (Raylib.IsMouseButtonPressed(Raylib.MOUSE_LEFT_BUTTON))
                 {
@@ -125,8 +141,22 @@ namespace JustWind.Systems
                     {
                         singleton.State = GameState.Game;
                     }
+                    if (Raylib.CheckCollisionPointRec(mousePos, mainMenuRect))
+                    {
+                        singleton.State = GameState.Menu;
+                    }
+                    if (Raylib.CheckCollisionPointRec(mousePos, exitRect))
+                    {
+                        singleton.State = GameState.Exit;
+                    }
                 }
             }
+        }
+        private void DrawBackground()
+        {
+            var bgMenuSourceRect = new Rectangle(0, 0, MenuTexture.width, MenuTexture.height);
+            var bgMenuDestinationRect = new Rectangle(0, 0, Raylib.GetScreenWidth(), Raylib.GetScreenHeight());
+            DrawTexturePro(MenuTexture, bgMenuSourceRect, bgMenuDestinationRect, new Vector2(0), 0f, Raylib.WHITE);
         }
     }
 }

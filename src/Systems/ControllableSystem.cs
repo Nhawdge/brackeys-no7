@@ -62,17 +62,17 @@ namespace JustWind.Systems
                     if (currentAct == null)
                     {
                         var action = new Act() { Action = Actions.Bark, Duration = 30, Damage = 100 / 30 };
-
                         player.Components.Add(action);
+
+                        var sound = new ActiveSound { SoundToPlay = SoundData.Bark };
+                        player.Components.Add(sound);
+
                     }
                     var myRender2 = player.GetComponent<Render>();
-                 }
+                }
 
                 var mousePos = Raylib.GetScreenToWorld2D(Raylib.GetMousePosition(), Engine.Camera);
 
-                if (Raylib.IsKeyDown(KeyboardKey.KEY_SPACE)){
-                    Console.WriteLine($"Mouse at {mousePos.X}, {mousePos.Y}");
-                }
 
                 if (Raylib.IsMouseButtonPressed(MOUSE_RIGHT_BUTTON))
                 {
@@ -81,10 +81,15 @@ namespace JustWind.Systems
                     {
                         var action = new Act() { Action = Actions.Growl, Duration = 120, Damage = 120 / 120 };
                         player.Components.Add(action);
+                        var sound = new ActiveSound { SoundToPlay = SoundData.Growl };
+                        player.Components.Add(sound);
                     }
-
                 }
 
+                if (Raylib.IsKeyDown(KeyboardKey.KEY_SPACE))
+                {
+                    Console.WriteLine($"Mouse at {mousePos.X}, {mousePos.Y}");
+                }
                 var myRender = player.GetComponent<Render>();
 
                 var offsetX = myPosition.X - mousePos.X;
