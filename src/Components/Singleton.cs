@@ -4,6 +4,9 @@ namespace JustWind.Components
     {
         public GameState State = GameState.Menu;
         public int Score = 0;
+        public int HouseSafety = 1000;
+        public int MaxHouseSafety = 1000;
+        public int LastSpawnTime = 0;
     }
 
     public enum GameState
@@ -12,6 +15,7 @@ namespace JustWind.Components
         Game,
         MenuHowToPlay,
         MenuCredits,
+        Paused,
         Exit
     }
 }

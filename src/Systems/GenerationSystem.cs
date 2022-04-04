@@ -14,6 +14,8 @@ namespace JustWind.Systems
         {
             Engine.Entities.Add(CreateWaterDish());
             Engine.Entities.Add(CreateFoodDish());
+            Engine.Entities.Add(CreateWestFence());
+
             Engine.Entities.Add(CreatePlayer());
         }
 
@@ -21,10 +23,12 @@ namespace JustWind.Systems
         {
             var singleton = Engine.Singleton.GetComponent<Singleton>();
             var allEnemies = allEntities.Where(x => x.HasTypes(typeof(EnemyAi)));
-            if (allEnemies.Count() < 1)
+            if (allEnemies.Count() < 4 && singleton.LastSpawnTime > 100)
             {
                 Engine.Entities.Add(CreateRandomEnemy());
+                singleton.LastSpawnTime = 0;
             }
+            singleton.LastSpawnTime++;
         }
     }
 }

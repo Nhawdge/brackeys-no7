@@ -16,6 +16,7 @@ namespace JustWind.Entities
             entity.Components.Add(new Animation(AnimationData.DogWag));
             entity.Components.Add(new Controllable());
             entity.Components.Add(new State());
+            entity.Components.Add(new Collision() { CollisionState = CollisionStates.Dynamic });
 
             return entity;
         }
@@ -30,13 +31,15 @@ namespace JustWind.Entities
             entity.Components.Add(new Render());
             entity.Components.Add(new State());
 
-            var path = PathData.SideWalk;
+            var path = PathData.GetRandomPath();
 
             entity.Components.Add(new EnemyAi(path));
             entity.Components.Add(new Position { X = (int)path.FirstOrDefault().X, Y = (int)path.FirstOrDefault().Y, Speed = 5, Width = 256, Height = 256 });
 
             return entity;
         }
+
+        #region Food/Water
 
         public static Entity CreateWaterDish()
         {
@@ -48,6 +51,11 @@ namespace JustWind.Entities
 
             return entity;
         }
+
+        // Food and water:
+        // 2850, 3300
+        // 3050, 3300
+
         public static Entity CreateFoodDish()
         {
             var entity = new Entity();
@@ -58,5 +66,42 @@ namespace JustWind.Entities
 
             return entity;
         }
+        #endregion
+
+        #region Fences
+        public static Entity CreateWestFence()
+        {
+            var entity = new Entity();
+            var rand = new Random();
+
+            entity.Components.Add(new Position { X = 982, Y = 1152, Speed = 0, Width = 3112, Height = 2116 });
+            entity.Components.Add(new Collision() { CollisionState = CollisionStates.Static });
+
+            return entity;
+
+            // West wall
+            // 690, 480     770, 480
+            // 690, 4096    770, 4096
+        }
+        public static Entity CreateNorthFence()
+        {
+            var entity = new Entity();
+            // North wall
+            // 690, 476    4094, 476
+            // 690, 558    4097, 558
+
+            return entity;
+        }
+
+        #endregion
+        public static Entity CreateHouse()
+        {
+            var entity = new Entity();
+            return entity;
+            /// House:
+            /// 982, 1152     4094, 1150
+            /// 980, 3268     4093, 3267
+        }
+
     }
 }
