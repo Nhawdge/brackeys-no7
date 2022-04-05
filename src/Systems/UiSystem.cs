@@ -116,7 +116,7 @@ namespace JustWind.Systems
                     }
                 }
                 var percent = ((float)singleton.HouseSafety / (float)singleton.MaxHouseSafety);
-                var textToDraw = (percent * 100).ToString("0.0");
+                var textToDraw = (percent ).ToString("0%");
                 var width = percent * 200;
 
                 DrawRectangle(GetScreenWidth() / 2 - 105, 5, 210, 30, Raylib.BLACK);

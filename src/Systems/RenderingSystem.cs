@@ -42,6 +42,22 @@ namespace JustWind.Systems
                         //DrawCircle((int)myPosition.Rectangle.X, (int)myPosition.Rectangle.Y, 500f, Raylib.GREEN);
                         //DrawCircle((int)myPosition.Rectangle.X, (int)myPosition.Rectangle.Y, 400f, Raylib.YELLOW);
                         //DrawCircle((int)myPosition.Rectangle.X, (int)myPosition.Rectangle.Y, 200f, Raylib.RED);
+                        if (entity.HasTypes(typeof(EnemyAi)))
+                        {
+                            var myAi = entity.GetComponent<EnemyAi>();
+                            if (myAi.Scariness > 0)
+                            {
+                                var percent = ((float)myAi.Scariness / (float)myAi.MaxScariness);
+                                var textToDraw = (percent * 100).ToString("0.0");
+                                var width = percent * 100;
+
+                                DrawRectangle(myPosition.X - 54, myPosition.Y - (int)(myPosition.Rectangle.height / 2), 108, 20, Raylib.BLACK);
+                                DrawRectangle(myPosition.X - 50, myPosition.Y - (int)(myPosition.Rectangle.height / 2) + 5, (int)width, 10, Raylib.RED);
+
+                            }
+                            //DrawRectangle(GetScreenWidth() / 2 - 100, 10, (int)width, 20, Raylib.RED);
+                            //DrawText($"{textToDraw}", (GetScreenWidth() / 2) - (MeasureText(textToDraw, 12) / 2), 10, 20, Raylib.WHITE);
+                        }
                     }
                 }
             }

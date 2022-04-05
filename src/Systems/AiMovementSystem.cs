@@ -39,15 +39,8 @@ namespace JustWind.Systems
                         myAi.NextIndex++;
                         if (myAi.NextIndex >= myAi.Path.Count)
                         {
-                            if (myAi.PathLoops && myAi.Scariness > 1)
-                            {
-                                myAi.NextIndex = 0;
-                            }
-                            else
-                            {
-                                entitiesToRemove.Add(entity);
-                                continue;
-                            }
+                            entitiesToRemove.Add(entity);
+                            continue;
                         }
                         myAi.NextTarget = myAi.Path[myAi.NextIndex];
                     }

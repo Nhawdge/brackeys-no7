@@ -6,21 +6,28 @@ namespace JustWind.Components
     {
         public List<Vector2> Path = new();
         public int Speed = 5;
+        public int Level = 1;
         public Vector2 NextTarget;
         public int NextIndex = 0;
         public bool PathLoops = true;
-        public int Scariness = 225;
+        public float Scariness = 250;
+        public float MaxScariness = 250;
 
         public double LastTimeDamageDealt = 0;
+        public int Damage = 3;
 
         public EnemyAi()
         {
             Path = PathData.SideWalk;
         }
 
-        public EnemyAi(List<Vector2> path)
+        public EnemyAi(List<Vector2> path, int level)
         {
             Path = path;
+            Level = level;
+            Scariness = 250 + ((level - 1) * 50);
+            MaxScariness = Scariness;
+            Damage = 2 + level;
         }
     }
 

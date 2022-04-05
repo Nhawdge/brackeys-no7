@@ -61,7 +61,7 @@ namespace JustWind.Systems
                     var currentAct = player.GetComponent<Act>();
                     if (currentAct == null)
                     {
-                        var action = new Act() { Action = Actions.Bark, Duration = 30, Damage = 100 / 30 };
+                        var action = new Act(Actions.Bark);
                         player.Components.Add(action);
 
                         var sound = new ActiveSound { SoundToPlay = SoundData.Bark };
@@ -79,7 +79,7 @@ namespace JustWind.Systems
                     var currentAct = player.GetComponent<Act>();
                     if (currentAct == null)
                     {
-                        var action = new Act() { Action = Actions.Growl, Duration = 120, Damage = 120 / 120 };
+                        var action = new Act(Actions.Growl);
                         player.Components.Add(action);
                         var sound = new ActiveSound { SoundToPlay = SoundData.Growl };
                         player.Components.Add(sound);
