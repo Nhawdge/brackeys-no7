@@ -23,7 +23,7 @@ namespace JustWind.Systems
             {
                 var time = Raylib.GetTime();
                 // Enemies do -5 per second
-                // Friendlies do +2 per second
+                // Friendlies do +4 per second
                 var scaryEnemies = allEntities.Where(x => x.HasTypes(typeof(EnemyAi)));
                 foreach (var enemy in scaryEnemies)
                 {
@@ -31,13 +31,17 @@ namespace JustWind.Systems
                     if (ai.Scariness > 0 && ai.LastTimeDamageDealt < (time - 1))
                     {
                         ai.LastTimeDamageDealt = time;
-                        singleton.HouseSafety -= 5;
+                        singleton.HouseSafety -= ai.Damage;
                     }
                     if (ai.Scariness < 0 && ai.LastTimeDamageDealt < (time - 1))
                     {
                         ai.LastTimeDamageDealt = time;
                         singleton.HouseSafety += 4;
                     }
+                }
+                if (singleton.HouseSafety > singleton.MaxHouseSafety)
+                {
+                    singleton.HouseSafety = singleton.MaxHouseSafety;
                 }
             }
         }

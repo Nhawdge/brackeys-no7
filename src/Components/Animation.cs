@@ -74,6 +74,7 @@ namespace JustWind.Components
                 { 2, new Frame("src/Assets/enemies/persona_walk3.png", 3) },
                 { 3, new Frame("src/Assets/enemies/persona_walk4.png", 3) },
             };
+
             PersonB = new()
             {
                 { 0, new Frame("src/Assets/enemies/personb_walk1.png", 3) },
@@ -82,10 +83,40 @@ namespace JustWind.Components
                 { 3, new Frame("src/Assets/enemies/personb_walk4.png", 3) },
             };
 
-            ScaryOptions = new() { AnimationData.AlienEye, AnimationData.Bat, AnimationData.Demon };
+            GreenGuy = new()
+            {
+                { 0, new Frame("src/Assets/enemies/AlienGreen1.png", 3) },
+                { 1, new Frame("src/Assets/enemies/AlienGreen2.png", 3) },
+                { 2, new Frame("src/Assets/enemies/AlienGreen3.png", 3) },
+                { 3, new Frame("src/Assets/enemies/AlienGreen4.png", 3) },
+            };
+
+            DinoRed = new()
+            {
+                { 0, new Frame("src/Assets/enemies/trexgreen1.png", 3) },
+                { 1, new Frame("src/Assets/enemies/trexgreen2.png", 3) },
+                { 2, new Frame("src/Assets/enemies/trexgreen3.png", 3) },
+                { 3, new Frame("src/Assets/enemies/trexgreen4.png", 3) },
+            };
+
+            DinoGreen = new(){
+                { 0, new Frame("src/Assets/enemies/trex1.png", 3) },
+                { 1, new Frame("src/Assets/enemies/trex2.png", 3) },
+                { 2, new Frame("src/Assets/enemies/trex3.png", 3) },
+                { 3, new Frame("src/Assets/enemies/trex4.png", 3) },
+            };
+
+            ScaryOptionsL1 = new() { AnimationData.Demon, AnimationData.Bat };
+            ScaryOptionsL2 = new() { AnimationData.AlienEye, AnimationData.GreenGuy };
+            ScaryOptionsL3 = new() { AnimationData.DinoRed, AnimationData.DinoGreen };
+
+
+            //ScaryOptions = new() { AnimationData.AlienEye, AnimationData.Bat, AnimationData.Demon };
             EnemyOptions = new() { AnimationData.PersonA, AnimationData.PersonB, AnimationData.ScooterKid };
         }
-        public static List<Dictionary<int, Frame>> ScaryOptions;
+        public static List<Dictionary<int, Frame>> ScaryOptionsL1;
+        public static List<Dictionary<int, Frame>> ScaryOptionsL2;
+        public static List<Dictionary<int, Frame>> ScaryOptionsL3;
         public static List<Dictionary<int, Frame>> EnemyOptions;
         public static readonly Dictionary<int, Frame> DogWag = new Dictionary<int, Frame>() {
             { 0, new Frame("src/Assets/dog/dog_wag1.png", 3) },
@@ -109,13 +140,32 @@ namespace JustWind.Components
             { 0, new Frame("src/Assets/dog/dog_bark.png", 3) },
         };
 
-        public static readonly Dictionary<int, Frame> AlienEye;
-
+        #region Demons (L1)
         public static readonly Dictionary<int, Frame> Bat;
         public static readonly Dictionary<int, Frame> Demon;
-        public static readonly Dictionary<int, Frame> ScooterKid;
 
+        #endregion
+
+        #region Aliens (L2)
+
+        public static readonly Dictionary<int, Frame> AlienEye;
+        public static readonly Dictionary<int, Frame> GreenGuy;
+
+        #endregion
+
+        #region  Dinosaurs (L3)
+
+        public static readonly Dictionary<int, Frame> DinoGreen;
+        public static readonly Dictionary<int, Frame> DinoRed;
+
+        #endregion
+
+        #region  Safe
+
+        public static readonly Dictionary<int, Frame> ScooterKid;
         public static readonly Dictionary<int, Frame> PersonA;
         public static readonly Dictionary<int, Frame> PersonB;
+        #endregion
+
     }
 }

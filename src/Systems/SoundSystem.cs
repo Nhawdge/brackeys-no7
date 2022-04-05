@@ -29,7 +29,9 @@ namespace JustWind.Systems
             Raylib.UpdateMusicStream(CurrentMusic);
             var singleton = Engine.Singleton.GetComponent<Singleton>();
 
-            if (singleton.State == GameState.Menu)
+            if (singleton.State == GameState.Menu
+                || singleton.State == GameState.MenuCredits
+                || singleton.State == GameState.MenuHowToPlay)
             {
                 if (!CurrentMusic.Equals(SoundData.TitleMusic))
                 {
@@ -44,7 +46,6 @@ namespace JustWind.Systems
                 CurrentMusic = SoundData.GameMusic;
                 Raylib.PlayMusicStream(CurrentMusic);
             }
-
 
             var soundedEntities = allEntities.Where(x => x.HasTypes(typeof(ActiveSound)));
             foreach (var entity in soundedEntities)
@@ -66,7 +67,7 @@ namespace JustWind.Systems
 
         static SoundData()
         {
-            Raylib.InitAudioDevice();
+            //Raylib.InitAudioDevice();
 
             TitleMusic = Raylib.LoadMusicStream("src/Assets/audio/title.wav");
             GameMusic = Raylib.LoadMusicStream("src/Assets/audio/muzac.wav");

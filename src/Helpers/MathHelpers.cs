@@ -15,9 +15,9 @@ namespace JustWind.Helpers
         {
             return (int)(radians * (180 / Math.PI));
         }
-        public static int ToRadians(this float degrees)
+        public static float ToRadians(this float degrees)
         {
-            return (int)(degrees * (Math.PI / 180));
+            return (float)(degrees * (Math.PI / 180));
         }
         public static int DistanceBetween(Vector2 a, Vector2 b)
         {

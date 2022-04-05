@@ -27,15 +27,26 @@ namespace JustWind.Entities
             var rand = new Random();
 
             //entity.Components.Add(new Position { X = Raylib_CsLo.Raylib.GetScreenWidth() / 2, Y = Raylib_CsLo.Raylib.GetScreenHeight() / 2, Speed = 5, Width = 256, Height = 256 });
-            entity.Components.Add(new Animation(AnimationData.ScaryOptions.ElementAt(rand.Next(0, AnimationData.ScaryOptions.Count))));
+            var level = rand.Next(1, 4);
+            var animationSet = level switch
+            {
+                1 => AnimationData.ScaryOptionsL1,
+                2 => AnimationData.ScaryOptionsL2,
+                3 => AnimationData.ScaryOptionsL3,
+                _ => AnimationData.ScaryOptionsL1,
+            };
+
+            entity.Components.Add(new Animation(animationSet.ElementAt(rand.Next(0, animationSet.Count))));
             entity.Components.Add(new Render());
             entity.Components.Add(new State());
 
             var path = PathData.GetRandomPath();
 
-            entity.Components.Add(new EnemyAi(path));
-            entity.Components.Add(new Position { X = (int)path.FirstOrDefault().X, Y = (int)path.FirstOrDefault().Y, Speed = 5, Width = 256, Height = 256 });
+            entity.Components.Add(new EnemyAi(path, level));
 
+            var speed = 5 + (level * 2);
+            entity.Components.Add(new Position { X = (int)path.FirstOrDefault().X, Y = (int)path.FirstOrDefault().Y, Speed = speed, Width = 256, Height = 256 });
+            Console.WriteLine($"Spawned Enemy Level: {level}");
             return entity;
         }
 
