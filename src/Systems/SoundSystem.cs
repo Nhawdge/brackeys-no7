@@ -67,7 +67,7 @@ namespace JustWind.Systems
 
         static SoundData()
         {
-            //Raylib.InitAudioDevice();
+            Raylib.InitAudioDevice();
 
             TitleMusic = Raylib.LoadMusicStream("src/Assets/audio/title.wav");
             GameMusic = Raylib.LoadMusicStream("src/Assets/audio/muzac.wav");
