@@ -31,3 +31,8 @@ dotnet publish -c Release -r win-x64 --self-contained true -p:PublishSingleFile=
 **Art**:
 
 * [x] dog_bark Transparency issue 
+* [ ] Fence standalone png for collisions
+* [ ] Roof standalone png for collisions
+* [ ] Help screen "art"
+* [ ] Pause screen "art"
+* [ ] Credits "art"
