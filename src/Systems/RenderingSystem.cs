@@ -42,6 +42,16 @@ namespace JustWind.Systems
                         //DrawCircle((int)myPosition.Rectangle.X, (int)myPosition.Rectangle.Y, 500f, Raylib.GREEN);
                         //DrawCircle((int)myPosition.Rectangle.X, (int)myPosition.Rectangle.Y, 400f, Raylib.YELLOW);
                         //DrawCircle((int)myPosition.Rectangle.X, (int)myPosition.Rectangle.Y, 200f, Raylib.RED);
+                        if (entity.HasTypes(typeof(Collision<CircleBoundType>)))
+                        {
+                            var collision = entity.GetComponent<Collision<CircleBoundType>>();
+                            DrawCircleLines((int)myPosition.Rectangle.X, (int)myPosition.Rectangle.Y, collision.BoundType.Radius, Raylib.GREEN);
+                        }
+                        if (entity.HasTypes(typeof(Collision<RectangleBoundType>)))
+                        {
+                            var collision = entity.GetComponent<Collision<RectangleBoundType>>();
+                            //DrawRectangleRec(collision.BoundType.Rectangle, Raylib.RED);
+                        }
                         if (entity.HasTypes(typeof(EnemyAi)))
                         {
                             var myAi = entity.GetComponent<EnemyAi>();

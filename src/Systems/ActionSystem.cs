@@ -32,22 +32,24 @@ namespace JustWind.Systems
                 action.ActionTimer += time;
                 if (action.Action == Actions.Bark)
                 {
+                    var leftDegrees = (myRender.Direction + 180 - 15) % 360;
+                    var rightDegrees = (myRender.Direction + 180 + 15) % 360;
+                    var leftX = myPosition.X + (Math.Cos(leftDegrees.ToRadians()) * 500);
+                    var leftY = myPosition.Y + (Math.Sin(leftDegrees.ToRadians()) * 500);
+                    var rightX = myPosition.X + Math.Cos(rightDegrees.ToRadians()) * 500;
+                    var rightY = myPosition.Y + Math.Sin(rightDegrees.ToRadians()) * 500;
+                    var leftCorner = new Vector2((int)leftX, (int)leftY);
+                    var rightCorner = new Vector2((int)rightX, (int)rightY);
+
+                    Raylib.DrawLineV(leftCorner, rightCorner, Raylib.BLACK);
+                    Raylib.DrawLineV(myPosition.AsVector(), rightCorner, Raylib.BLACK);
+                    Raylib.DrawLineV(myPosition.AsVector(), leftCorner, Raylib.BLACK);
+
                     if (action.ActionTimer > action.CooldownInSeconds / action.TotalDamageTicks)
                     {
                         var targets = allEntities.Where(x => x.HasTypes(typeof(EnemyAi), typeof(Position)));
                         action.TotalDamageTicks--;
 
-                        var leftDegrees = (myRender.Direction + 180 - 15) % 360;
-                        var rightDegrees = (myRender.Direction + 180 + 15) % 360;
-                        var leftX = myPosition.X + (Math.Cos(leftDegrees.ToRadians()) * 500);
-                        var leftY = myPosition.Y + (Math.Sin(leftDegrees.ToRadians()) * 500);
-                        var rightX = myPosition.X + Math.Cos(rightDegrees.ToRadians()) * 500;
-                        var rightY = myPosition.Y + Math.Sin(rightDegrees.ToRadians()) * 500;
-                        var leftCorner = new Vector2((int)leftX, (int)leftY);
-                        var rightCorner = new Vector2((int)rightX, (int)rightY);
-                        Raylib.DrawLineV(leftCorner, rightCorner, Raylib.BLACK);
-                        Raylib.DrawLineV(myPosition.AsVector(), rightCorner, Raylib.BLACK);
-                        Raylib.DrawLineV(myPosition.AsVector(), leftCorner, Raylib.BLACK);
 
                         var nearestTargets = allEntities
                             .Where(x => x.HasTypes(typeof(EnemyAi), typeof(Position)))
@@ -82,7 +84,6 @@ namespace JustWind.Systems
                                 if (debuff != null)
                                 {
                                     damage *= debuff.Amount;
-                                    Console.WriteLine($"Debuff Amplifying damage {damage}");
                                 }
                                 targetAi.Scariness -= Math.Min(targetAi.Scariness, damage);
                             }
@@ -127,7 +128,6 @@ namespace JustWind.Systems
                                 damage = (int)(action.DamagePerTick * .33f);
                             }
                             targetAi.Scariness -= Math.Min(targetAi.Scariness, damage);
-                            Console.WriteLine($"{targetAi.Scariness} -= {damage}, {Math.Min(targetAi.Scariness, damage)}");
                         }
                     }
                 }

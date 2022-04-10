@@ -17,11 +17,11 @@ public class Engine
         Systems.Add(new AiMovementSystem(this));
         Systems.Add(new HouseSafetySystem(this));
         Systems.Add(new SoundSystem(this));
-        Systems.Add(new ControllableSystem(this));
         Systems.Add(new StateManagerSystem(this));
         Systems.Add(new AnimationSystem(this));
         Systems.Add(new CameraSystem(this));
         Systems.Add(new RenderingSystem(this));
+        Systems.Add(new ControllableSystem(this));
         Systems.Add(new ActionSystem(this));
 
         NoCameraSystems.Add(new UiSystem(this));

@@ -1,8 +1,25 @@
+using Raylib_CsLo;
+
 namespace JustWind.Components
 {
-    public class Collision : Component
+    public class Collision<IBoundingType> : Component
     {
         public CollisionStates CollisionState;
+        public IBoundingType BoundType;
+    }
+
+    public interface IBoundingType
+    {
+    }
+
+    public class CircleBoundType : IBoundingType
+    {
+        public float Radius;
+    }
+
+    public class RectangleBoundType : IBoundingType
+    {
+        public Rectangle Rectangle;
     }
 
     public enum CollisionStates
