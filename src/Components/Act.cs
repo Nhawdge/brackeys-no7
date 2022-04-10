@@ -13,13 +13,13 @@ namespace JustWind.Components
                 case Actions.Growl:
                     Action = Actions.Growl;
                     DamagePerTick = 5;
-                    DurationInSeconds = 2;
+                    DurationInMs = 2f;
                     TotalDamageTicks = 4;
                     break;
                 case Actions.Bark:
                     Action = Actions.Bark;
                     DamagePerTick = 75;
-                    DurationInSeconds = 1;
+                    DurationInMs = 1f;
                     TotalDamageTicks = 1;
                     break;
                 default:
@@ -28,9 +28,9 @@ namespace JustWind.Components
         }
         public Actions Action;
         public double LastActionTime;
-        public int DurationInSeconds;
+        public float DurationInMs;
         public int DamagePerTick;
-        public int TotalDamageTicks;
+        public float TotalDamageTicks;
     }
 
     public enum Actions

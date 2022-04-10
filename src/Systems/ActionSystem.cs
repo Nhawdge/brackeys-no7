@@ -44,9 +44,9 @@ namespace JustWind.Systems
                         var rightY = myPosition.Y + Math.Sin(rightDegrees.ToRadians()) * 500;
                         var leftCorner = new Vector2((int)leftX, (int)leftY);
                         var rightCorner = new Vector2((int)rightX, (int)rightY);
-                        Raylib.DrawLine((int)leftCorner.X, (int)leftCorner.Y, (int)rightCorner.X, (int)rightCorner.Y, Raylib.BLACK);
-                        Raylib.DrawLine(myPosition.X, myPosition.Y, (int)rightCorner.X, (int)rightCorner.Y, Raylib.BLACK);
-                        Raylib.DrawLine(myPosition.X, myPosition.Y, (int)leftCorner.X, (int)leftCorner.Y, Raylib.BLACK);
+                        Raylib.DrawLineV(leftCorner, rightCorner, Raylib.BLACK);
+                        Raylib.DrawLineV(myPosition.AsVector(), rightCorner, Raylib.BLACK);
+                        Raylib.DrawLineV(myPosition.AsVector(), leftCorner, Raylib.BLACK);
 
                         var nearestTargets = allEntities
                             .Where(x => x.HasTypes(typeof(EnemyAi), typeof(Position)))
@@ -97,7 +97,7 @@ namespace JustWind.Systems
                         .Where(x => x.GetComponent<EnemyAi>().Scariness > 0);
 
 
-                    if (action.LastActionTime < (time - (action.DurationInSeconds / action.TotalDamageTicks)))
+                    if (action.LastActionTime < (time - (action.DurationInMs / action.TotalDamageTicks)))
                     {
                         action.LastActionTime = time;
                         action.TotalDamageTicks--;

@@ -5,12 +5,12 @@ namespace JustWind.Components
 {
     public class Position : Component
     {
-        public int X;
-        public int Y;
-        public int Width;
-        public int Height;
-        public int Speed = 2;
-        public int Direction = 0;
+        public float X;
+        public float Y;
+        public float Width;
+        public float Height;
+        public float Speed = 2;
+        public float Direction = 0;
 
         public Rectangle Rectangle => new Rectangle(X, Y, Width, Height);
 

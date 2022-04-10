@@ -32,12 +32,14 @@ public class Engine
     }
     public void Run()
     {
+        Raylib.SetWindowState(ConfigFlags.FLAG_WINDOW_RESIZABLE);
+        Raylib.SetConfigFlags(ConfigFlags.FLAG_VSYNC_HINT);
+        Raylib.SetWindowIcon(Raylib.LoadImage("src/Assets/menu/icon.png"));
+
         Raylib.InitWindow(1280, 720, "It's just the wind...");
 
-        Raylib.SetTargetFPS(30);
-        Raylib.SetWindowIcon(Raylib.LoadImage("src/Assets/menu/icon.png"));
+        Raylib.SetTargetFPS(240);
         //Raylib.SetWindowState(ConfigFlags.FLAG_WINDOW_UNDECORATED);
-        Raylib.SetWindowState(ConfigFlags.FLAG_WINDOW_RESIZABLE);
 
         Camera = new Camera2D();
         Camera.zoom = 1;

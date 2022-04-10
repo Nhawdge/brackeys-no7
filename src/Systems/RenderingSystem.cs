@@ -51,8 +51,8 @@ namespace JustWind.Systems
                                 var textToDraw = (percent * 100).ToString("0.0");
                                 var width = percent * 100;
 
-                                DrawRectangle(myPosition.X - 54, myPosition.Y - (int)(myPosition.Rectangle.height / 2), 108, 20, Raylib.BLACK);
-                                DrawRectangle(myPosition.X - 50, myPosition.Y - (int)(myPosition.Rectangle.height / 2) + 5, (int)width, 10, Raylib.RED);
+                                DrawRectangle((int)myPosition.X - 54, (int)myPosition.Y - (int)(myPosition.Rectangle.height / 2), 108, 20, Raylib.BLACK);
+                                DrawRectangle((int)myPosition.X - 50, (int)myPosition.Y - (int)(myPosition.Rectangle.height / 2) + 5, (int)width, 10, Raylib.RED);
 
                             }
                             //DrawRectangle(GetScreenWidth() / 2 - 100, 10, (int)width, 20, Raylib.RED);

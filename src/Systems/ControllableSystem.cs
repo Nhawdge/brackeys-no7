@@ -29,31 +29,32 @@ namespace JustWind.Systems
             if (player != null)
             {
                 var myPosition = player.GetComponent<Position>();
+                var speed = myPosition.Speed * 30 * Raylib.GetFrameTime();
                 var futurePos = new Vector2(0);
 
                 if (Raylib.IsKeyDown(KeyboardKey.KEY_A))
                 {
-                    futurePos.X -= myPosition.Speed;
+                    futurePos.X -= speed;
                 }
                 if (Raylib.IsKeyDown(KeyboardKey.KEY_D))
                 {
-                    futurePos.X += myPosition.Speed;
+                    futurePos.X += speed;
                 }
                 if (Raylib.IsKeyDown(KeyboardKey.KEY_W))
                 {
-                    futurePos.Y -= myPosition.Speed;
+                    futurePos.Y -= speed;
                 }
                 if (Raylib.IsKeyDown(KeyboardKey.KEY_S))
                 {
-                    futurePos.Y += myPosition.Speed;
+                    futurePos.Y += speed;
                 }
 
                 if (futurePos.X != 0 || futurePos.Y != 0)
                 {
                     var futureAngle = (float)Math.Atan2(futurePos.Y, futurePos.X);
 
-                    myPosition.X += (int)(Math.Cos(futureAngle) * myPosition.Speed);
-                    myPosition.Y += (int)(Math.Sin(futureAngle) * myPosition.Speed);
+                    myPosition.X += (int)(Math.Cos(futureAngle) * speed);
+                    myPosition.Y += (int)(Math.Sin(futureAngle) * speed);
                 }
 
                 if (Raylib.IsMouseButtonPressed(MOUSE_LEFT_BUTTON))

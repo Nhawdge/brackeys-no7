@@ -103,6 +103,7 @@ namespace JustWind.Systems
             }
             if (singleton.State == GameState.Game)
             {
+                DrawText(GetFPS().ToString(), 10, 10, 20, GREEN);
                 var corner = new Vector2((GetScreenWidth() - 75), 10);
                 var offset = GetScreenToWorld2D(corner, Engine.Camera);
 
