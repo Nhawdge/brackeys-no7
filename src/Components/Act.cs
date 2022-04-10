@@ -1,36 +1,35 @@
-using System;
-using System.Numerics;
-
 namespace JustWind.Components
 {
     public class Act : Component
     {
         public Act(Actions action)
         {
-            LastActionTime = 0;
             switch (action)
             {
                 case Actions.Growl:
                     Action = Actions.Growl;
                     DamagePerTick = 5;
-                    DurationInSeconds = 2;
+                    DurationInMs = 2f;
                     TotalDamageTicks = 4;
+                    CooldownInSeconds = 2f;
                     break;
                 case Actions.Bark:
                     Action = Actions.Bark;
                     DamagePerTick = 75;
-                    DurationInSeconds = 1;
+                    DurationInMs = 1f;
                     TotalDamageTicks = 1;
+                    CooldownInSeconds = 0.5f;
                     break;
                 default:
                     throw new ArgumentException();
             }
         }
         public Actions Action;
-        public double LastActionTime;
-        public int DurationInSeconds;
+        public float ActionTimer = 0;
+        public float DurationInMs;
         public int DamagePerTick;
-        public int TotalDamageTicks;
+        public float TotalDamageTicks;
+        public float CooldownInSeconds;
     }
 
     public enum Actions

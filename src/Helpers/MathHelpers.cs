@@ -3,25 +3,25 @@ namespace JustWind.Helpers
 {
     public static class MathHelpers
     {
-        public static int ToDegrees(this double radians)
+        public static float ToDegrees(this double radians)
         {
-            return (int)(radians * (180 / Math.PI));
+            return (float)(radians * (180 / Math.PI));
         }
-        public static int ToRadians(this double degrees)
+        public static float ToRadians(this double degrees)
         {
-            return (int)(degrees * (Math.PI / 180));
+            return (float)(degrees * (Math.PI / 180));
         }
-        public static int ToDegrees(this float radians)
+        public static float ToDegrees(this float radians)
         {
-            return (int)(radians * (180 / Math.PI));
+            return (float)(radians * (180 / Math.PI));
         }
         public static float ToRadians(this float degrees)
         {
             return (float)(degrees * (Math.PI / 180));
         }
-        public static int DistanceBetween(Vector2 a, Vector2 b)
+        public static float DistanceBetween(Vector2 a, Vector2 b)
         {
-            return (int)Math.Sqrt(Math.Pow(a.X - b.X, 2) + Math.Pow(a.Y - b.Y, 2));
+            return (float)Math.Sqrt(Math.Pow(a.X - b.X, 2) + Math.Pow(a.Y - b.Y, 2));
         }
     }
 }

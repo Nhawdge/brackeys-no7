@@ -23,11 +23,16 @@ dotnet publish -c Release -r win-x64 --self-contained true -p:PublishSingleFile=
 * [ ] Finish Bark
 * [ ] Yard Collision
 * [ ] Transformation animation
-* [ ] House Safety level
+* [x] House Safety level
 * [ ] Round ending
 * [ ] Pause/Exit
-* [ ]  also, add localizations for Finland so you can have Finnish Growl and Finnish Bark
+* [x]  also, add localizations for Finland so you can have Finnish Growl and Finnish Bark
 
 **Art**:
 
 * [x] dog_bark Transparency issue 
+* [x] Fence standalone png for collisions
+* [x] Roof standalone png for collisions
+* [ ] Help screen "art"
+* [ ] Pause screen "art"
+* [ ] Credits "art"

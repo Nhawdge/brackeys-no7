@@ -1,6 +1,7 @@
 using System.Numerics;
 using JustWind.Components;
 using JustWind.Entities;
+using Raylib_CsLo;
 using static JustWind.Helpers.MathHelpers;
 
 namespace JustWind.Systems
@@ -24,6 +25,7 @@ namespace JustWind.Systems
                 {
                     var myPosition = entity.GetComponent<Position>();
                     var myAi = entity.GetComponent<EnemyAi>();
+                    var speed = myPosition.Speed * 30 * Raylib.GetFrameTime();
                     if (myAi.Scariness == 0)
                     {
                         myAi.Scariness = -1;
@@ -34,7 +36,7 @@ namespace JustWind.Systems
                     {
                         myAi.NextTarget = myAi.Path[myAi.NextIndex];
                     }
-                    if (DistanceBetween(myPosition.AsVector(), myAi.NextTarget) < myPosition.Speed)
+                    if (DistanceBetween(myPosition.AsVector(), myAi.NextTarget) < speed)
                     {
                         myAi.NextIndex++;
                         if (myAi.NextIndex >= myAi.Path.Count)
@@ -48,8 +50,8 @@ namespace JustWind.Systems
                     var angle = (float)Math.Atan2(myAi.NextTarget.Y - myPosition.Y, myAi.NextTarget.X - myPosition.X);
                     var myRender = entity.GetComponent<Render>();
                     myRender.Direction = angle.ToDegrees();
-                    myPosition.X += (int)(Math.Cos(angle) * myAi.Speed);
-                    myPosition.Y += (int)(Math.Sin(angle) * myAi.Speed);
+                    myPosition.X += (float)(Math.Cos(angle) * speed);
+                    myPosition.Y += (float)(Math.Sin(angle) * speed);
                 }
                 foreach (var removed in entitiesToRemove)
                 {

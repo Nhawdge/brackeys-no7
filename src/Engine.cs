@@ -17,11 +17,11 @@ public class Engine
         Systems.Add(new AiMovementSystem(this));
         Systems.Add(new HouseSafetySystem(this));
         Systems.Add(new SoundSystem(this));
-        Systems.Add(new ControllableSystem(this));
         Systems.Add(new StateManagerSystem(this));
         Systems.Add(new AnimationSystem(this));
         Systems.Add(new CameraSystem(this));
         Systems.Add(new RenderingSystem(this));
+        Systems.Add(new ControllableSystem(this));
         Systems.Add(new ActionSystem(this));
 
         NoCameraSystems.Add(new UiSystem(this));
@@ -32,12 +32,14 @@ public class Engine
     }
     public void Run()
     {
-        Raylib.InitWindow(1280, 720, "It's just the wind...");
-
-        Raylib.SetTargetFPS(30);
-        Raylib.SetWindowIcon(Raylib.LoadImage("src/Assets/menu/icon.png"));
-        //Raylib.SetWindowState(ConfigFlags.FLAG_WINDOW_UNDECORATED);
         Raylib.SetWindowState(ConfigFlags.FLAG_WINDOW_RESIZABLE);
+        //Raylib.SetConfigFlags(ConfigFlags.FLAG_VSYNC_HINT);
+
+        Raylib.InitWindow(1280, 720, "It's just the wind...");
+        Raylib.SetWindowIcon(Raylib.LoadImage("src/Assets/menu/icon.png"));
+
+        Raylib.SetTargetFPS(240);
+        //Raylib.SetWindowState(ConfigFlags.FLAG_WINDOW_UNDECORATED);
 
         Camera = new Camera2D();
         Camera.zoom = 1;

@@ -103,6 +103,7 @@ namespace JustWind.Systems
             }
             if (singleton.State == GameState.Game)
             {
+                DrawText(GetFPS().ToString(), 10, 10, 20, GREEN);
                 var corner = new Vector2((GetScreenWidth() - 75), 10);
                 var offset = GetScreenToWorld2D(corner, Engine.Camera);
 
@@ -116,7 +117,7 @@ namespace JustWind.Systems
                     }
                 }
                 var percent = ((float)singleton.HouseSafety / (float)singleton.MaxHouseSafety);
-                var textToDraw = (percent ).ToString("0%");
+                var textToDraw = (percent).ToString("0%");
                 var width = percent * 200;
 
                 DrawRectangle(GetScreenWidth() / 2 - 105, 5, 210, 30, Raylib.BLACK);
@@ -146,6 +147,31 @@ namespace JustWind.Systems
                         singleton.State = GameState.Menu;
                     }
                     if (Raylib.CheckCollisionPointRec(mousePos, exitRect))
+                    {
+                        singleton.State = GameState.Exit;
+                    }
+                }
+            }
+            else if (singleton.State == GameState.GameLoss)
+            {
+                DrawBackground();
+
+                Raylib.DrawText("You Lose!", Raylib.GetScreenWidth() / 2 - Raylib.MeasureText("You Lose!", 50) / 2, 100, 50, Raylib.RED);
+
+                var startRect = new Rectangle((GetScreenWidth() / 2 - 100), GetScreenHeight() / 2 - 100, 200, 50);
+                RayGui.GuiButton(startRect, "Play Again");
+
+                var quitRect = new Rectangle((GetScreenWidth() / 2 - 100), GetScreenHeight() / 2, 200, 50);
+                RayGui.GuiButton(quitRect, "Rage Quit");
+
+                if (Raylib.IsMouseButtonPressed(Raylib.MOUSE_LEFT_BUTTON))
+                {
+                    if (Raylib.CheckCollisionPointRec(mousePos, startRect))
+                    {
+                        singleton.State = GameState.Game;
+                        singleton.HouseSafety = singleton.MaxHouseSafety;
+                    }
+                    if (Raylib.CheckCollisionPointRec(mousePos, quitRect))
                     {
                         singleton.State = GameState.Exit;
                     }
