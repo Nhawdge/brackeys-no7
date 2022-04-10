@@ -25,9 +25,8 @@ namespace JustWind.Systems
             {
                 var myAnimation = entity.GetComponent<Animation>();
                 var myRender = entity.GetComponent<Render>();
-                myAnimation.Counter++;
-
-                //Console.WriteLine($"Total Frames: {myAnimation.Animations.Count()}");
+                myAnimation.Counter += Raylib_CsLo.Raylib.GetFrameTime();
+                
                 if (myAnimation.Animations.Count() > 0)
                 {
                     var currentFrame = myAnimation.Animations.ElementAtOrDefault(myAnimation.CurrentIndex).Value;

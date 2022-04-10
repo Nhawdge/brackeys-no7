@@ -33,7 +33,7 @@ public class Engine
     public void Run()
     {
         Raylib.SetWindowState(ConfigFlags.FLAG_WINDOW_RESIZABLE);
-        Raylib.SetConfigFlags(ConfigFlags.FLAG_VSYNC_HINT);
+        //Raylib.SetConfigFlags(ConfigFlags.FLAG_VSYNC_HINT);
 
         Raylib.InitWindow(1280, 720, "It's just the wind...");
         Raylib.SetWindowIcon(Raylib.LoadImage("src/Assets/menu/icon.png"));
