@@ -112,12 +112,58 @@ namespace JustWind.Entities
         public static Entity CreateNorthFence()
         {
             var entity = new Entity();
+            var rand = new Random();
+
+            entity.Components.Add(new Position { X = 690, Y = 476, Speed = 0, Width = 3404, Height = 82 });
+            //entity.Components.Add(new Render("src/Assets/scene/roof.png"));
+            entity.Components.Add(new Collision<RectangleBoundType>()
+            {
+                CollisionState = CollisionStates.Static,
+                BoundType = new RectangleBoundType() { Rectangle = new Rectangle(690, 476, 3404, 82) }
+            });
+
+            return entity;
             // North wall
             // 690, 476    4094, 476
             // 690, 558    4097, 558
 
+            // width = 3404
+            // height = 82
+
+        }
+
+
+        public static Entity CreateSouthBarrier()
+        {
+            var entity = new Entity();
+            var rand = new Random();
+
+            entity.Components.Add(new Position { X = 0, Y = 4096, Speed = 0, Width = 4096, Height = 20 });
+            entity.Components.Add(new Collision<RectangleBoundType>()
+            {
+                CollisionState = CollisionStates.Static,
+                BoundType = new RectangleBoundType() { Rectangle = new Rectangle(0, 4096, 4096, 20) }
+            });
+
             return entity;
         }
+
+
+        public static Entity CreateEastBarrier()
+        {
+            var entity = new Entity();
+            var rand = new Random();
+
+            entity.Components.Add(new Position { X = 4096, Y = 0, Speed = 0, Width = 20, Height = 4096 });
+            entity.Components.Add(new Collision<RectangleBoundType>()
+            {
+                CollisionState = CollisionStates.Static,
+                BoundType = new RectangleBoundType() { Rectangle = new Rectangle(4096, 0, 20, 4096) }
+            });
+
+            return entity;
+        }
+
 
         #endregion
         public static Entity CreateHouse()

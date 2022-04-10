@@ -98,6 +98,9 @@ namespace JustWind.Systems
                         .OrderBy(x => DistanceBetween(x.GetComponent<Position>().AsVector(), myPosition.AsVector()))
                         .Where(x => x.GetComponent<EnemyAi>().Scariness > 0);
 
+                    Raylib.DrawCircleLines((int)myPosition.X, (int)myPosition.Y, 200, Raylib.GREEN);
+                    Raylib.DrawCircleLines((int)myPosition.X, (int)myPosition.Y, 400, Raylib.YELLOW);
+                    Raylib.DrawCircleLines((int)myPosition.X, (int)myPosition.Y, 750, Raylib.RED);
                     if (action.ActionTimer > action.CooldownInSeconds / action.TotalDamageTicks)
                     {
                         action.TotalDamageTicks--;

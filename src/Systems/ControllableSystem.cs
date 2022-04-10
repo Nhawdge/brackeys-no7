@@ -127,7 +127,6 @@ namespace JustWind.Systems
                     }
                     if (!willCollide)
                     {
-                        Console.WriteLine("Okay to move");
                         myPosition.X += (float)(Math.Cos(futureAngle) * speed);
                         myPosition.Y += (float)(Math.Sin(futureAngle) * speed);
                     }
