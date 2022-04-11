@@ -38,10 +38,7 @@ namespace JustWind.Systems
                         var myPosition = entity.GetComponent<Position>();
 
                         DrawTexturePro(myRender.Texture, myRender.Rectangle, myPosition.Rectangle, myPosition.GetRectCenter(), myRender.Direction - 90, Raylib.WHITE);
-                        //DrawText($"{entity.ShortId()}", myPosition.Rectangle.X, myPosition.Rectangle.Y, 20, Raylib.BLACK);
-                        //DrawCircle((int)myPosition.Rectangle.X, (int)myPosition.Rectangle.Y, 500f, Raylib.GREEN);
-                        //DrawCircle((int)myPosition.Rectangle.X, (int)myPosition.Rectangle.Y, 400f, Raylib.YELLOW);
-                        //DrawCircle((int)myPosition.Rectangle.X, (int)myPosition.Rectangle.Y, 200f, Raylib.RED);
+                       
                         if (entity.HasTypes(typeof(Collision<CircleBoundType>)))
                         {
                             var collision = entity.GetComponent<Collision<CircleBoundType>>();
@@ -68,6 +65,7 @@ namespace JustWind.Systems
                             //DrawRectangle(GetScreenWidth() / 2 - 100, 10, (int)width, 20, Raylib.RED);
                             //DrawText($"{textToDraw}", (GetScreenWidth() / 2) - (MeasureText(textToDraw, 12) / 2), 10, 20, Raylib.WHITE);
                         }
+                    
                     }
                 }
             }

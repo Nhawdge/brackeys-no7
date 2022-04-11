@@ -1,4 +1,3 @@
-using System.ComponentModel;
 using System.Numerics;
 using JustWind.Components;
 using JustWind.Entities;
@@ -18,7 +17,6 @@ namespace JustWind.Systems
         public override void Load()
         {
             MenuTexture = LoadTexture("src/Assets/scene/cover.png");
-
         }
 
         public override void Update(List<Entity> allEntities)
@@ -127,6 +125,8 @@ namespace JustWind.Systems
             }
             else if (singleton.State == GameState.Paused)
             {
+                Raylib.DrawText("Paws'd", Raylib.GetScreenWidth() / 2 - Raylib.MeasureText("Paws'd", 50) / 2, 100, 50, Raylib.BLUE);
+
                 var resumeRect = new Rectangle((GetScreenWidth() / 2 - 100), GetScreenHeight() / 2 - 100, 200, 50);
                 RayGui.GuiButton(resumeRect, "Resume");
 

@@ -80,10 +80,10 @@ namespace JustWind.Systems
                                 {
                                     damage = (int)(action.DamagePerTick * .5f);
                                 }
-                                var debuff = target.GetComponent<Debuff>();
-                                if (debuff != null)
+                                var debuff = target.GetComponent<Debuff<DamageAmplify>>();
+                                if (debuff != null && debuff.DebuffType.ActionToAmplify == Actions.Bark)
                                 {
-                                    damage *= debuff.Amount;
+                                    damage *= debuff.Value;
                                 }
                                 targetAi.Scariness -= Math.Min(targetAi.Scariness, damage);
                             }
@@ -114,13 +114,16 @@ namespace JustWind.Systems
                             if (distancebetween < 200)
                             {
                                 damage = action.DamagePerTick;
-                                var targetDebuff = nearestTarget.GetComponent<Debuff>();
+                                var targetDebuff = nearestTarget.GetComponent<Debuff<DamageAmplify>>();
                                 if (targetDebuff == null)
                                 {
-                                    targetDebuff = new Debuff() { Type = Debuffs.AmplifyDamage };
+                                    targetDebuff = new Debuff<DamageAmplify>
+                                    {
+                                        DebuffType = new DamageAmplify { ActionToAmplify = Actions.Bark }
+                                    };
                                     nearestTarget.Components.Add(targetDebuff);
                                 }
-                                targetDebuff.Amount += .2f;
+                                targetDebuff.Value += .2f;
                             }
                             else if (distancebetween < 400)
                             {

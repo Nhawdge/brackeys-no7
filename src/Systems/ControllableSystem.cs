@@ -166,6 +166,16 @@ namespace JustWind.Systems
                     Console.WriteLine($"Mouse at {mousePos.X}, {mousePos.Y}");
                 }
 
+                if (Raylib.IsKeyDown(KeyboardKey.KEY_LEFT_SHIFT))
+                {
+                    var speedBuff = player.GetComponent<Buff<SpeedBuff>>();
+                    if (speedBuff == null)
+                    {
+                        var buff = new Buff<SpeedBuff>() { Value = 0.2f };
+                        player.Components.Add(buff);
+
+                    }
+                }
                 var myRender = player.GetComponent<Render>();
 
                 var offsetX = myPosition.X - mousePos.X;

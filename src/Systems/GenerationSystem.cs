@@ -19,6 +19,7 @@ namespace JustWind.Systems
             Engine.Entities.Add(CreateNorthFence());
             Engine.Entities.Add(CreateSouthBarrier());
             Engine.Entities.Add(CreateEastBarrier());
+            Engine.Entities.Add(CreateSunTimer());
 
             Engine.Entities.Add(CreatePlayer());
         }

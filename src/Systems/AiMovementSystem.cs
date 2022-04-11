@@ -13,7 +13,7 @@ namespace JustWind.Systems
         }
 
         public override void Load() { }
-
+        
         public override void Update(List<Entity> allEntities)
         {
             var rand = new Random();
@@ -59,6 +59,5 @@ namespace JustWind.Systems
                 }
             }
         }
-
     }
 }

@@ -191,5 +191,16 @@ namespace JustWind.Entities
 
         }
 
+        public static Entity CreateSunTimer()
+        {
+            var entity = new Entity();
+            var rand = new Random();
+
+            entity.Components.Add(new Position { X = 1000, Y = 1000, Speed = 0, Width = 512, Height = 512, Direction = 90 });
+            entity.Components.Add(new Render());
+            entity.Components.Add(new Animation(AnimationData.SunTimer));
+
+            return entity;
+        }
     }
 }
