@@ -29,33 +29,111 @@ namespace JustWind.Systems
             if (player != null)
             {
                 var myPosition = player.GetComponent<Position>();
+                var speed = myPosition.Speed * 30 * Raylib.GetFrameTime();
                 var futurePos = new Vector2(0);
 
                 if (Raylib.IsKeyDown(KeyboardKey.KEY_A))
                 {
-                    futurePos.X -= myPosition.Speed;
+                    futurePos.X -= speed;
                 }
                 if (Raylib.IsKeyDown(KeyboardKey.KEY_D))
                 {
-                    futurePos.X += myPosition.Speed;
+                    futurePos.X += speed;
                 }
                 if (Raylib.IsKeyDown(KeyboardKey.KEY_W))
                 {
-                    futurePos.Y -= myPosition.Speed;
+                    futurePos.Y -= speed;
                 }
                 if (Raylib.IsKeyDown(KeyboardKey.KEY_S))
                 {
-                    futurePos.Y += myPosition.Speed;
+                    futurePos.Y += speed;
                 }
 
                 if (futurePos.X != 0 || futurePos.Y != 0)
                 {
                     var futureAngle = (float)Math.Atan2(futurePos.Y, futurePos.X);
 
-                    myPosition.X += (int)(Math.Cos(futureAngle) * myPosition.Speed);
-                    myPosition.Y += (int)(Math.Sin(futureAngle) * myPosition.Speed);
+                    // Collision Check
+                    var predictedPos = new Vector2(myPosition.X + (float)(Math.Cos(futureAngle) * speed), myPosition.Y + (float)(Math.Sin(futureAngle) * speed));
+                    var myCollision = player.GetComponent<Collision<CircleBoundType>>();
+                    var willCollide = false;
+                    foreach (var collidable in allEntities.Where(x => x.HasTypes(typeof(Collision<RectangleBoundType>))))
+                    {
+                        var nearestPoint = new Vector2();
+                        var targetRect = collidable.GetComponent<Collision<RectangleBoundType>>();
+                        if (targetRect != null)
+                        {
+                            var xMiddle = false;
+                            var yMiddle = false;
+                            var tarRect = targetRect.BoundType.Rectangle;
+                            // check which X edge
+                            if (predictedPos.X < tarRect.X)
+                            {
+                                nearestPoint.X = tarRect.X;
+                            }
+                            else if (predictedPos.X > tarRect.X + tarRect.width)
+                            {
+                                nearestPoint.X = tarRect.X + tarRect.width;
+                            }
+                            else
+                            {
+                                nearestPoint.X = predictedPos.X;
+                                xMiddle = true;
+                            }
+
+                            if (predictedPos.Y < tarRect.y)
+                            {
+                                nearestPoint.Y = tarRect.Y;
+                            }
+                            else if (predictedPos.Y > tarRect.Y + tarRect.height)
+                            {
+                                nearestPoint.Y = tarRect.Y + tarRect.height;
+                            }
+                            else
+                            {
+                                nearestPoint.Y = predictedPos.Y;
+                                yMiddle = true;
+                            }
+
+                            var inside = xMiddle && yMiddle;
+                            // if (inside)
+                            // {
+                            //     var nearestEdge = new Vector2();
+                            //     if (predictedPos.X < tarRect.X)
+                            //     {
+                            //         nearestEdge.X = tarRect.X;
+                            //     }
+                            //     else if (predictedPos.X > tarRect.X + tarRect.width)
+                            //     {
+                            //         nearestEdge.X = tarRect.y;
+                            //     }
+
+                            //     if (predictedPos.Y < tarRect.y)
+                            //     {
+                            //         nearestEdge.Y = tarRect.y;
+                            //     }
+                            //     else if (predictedPos.Y > tarRect.Y + tarRect.height)
+                            //     {
+                            //         nearestEdge.Y = tarRect.Y;
+                            //     }
+                            // }
+                            DrawCircleV(nearestPoint, 5, BLACK);
+                            if (CheckCollisionPointCircle(nearestPoint, predictedPos, myCollision.BoundType.Radius))
+                            {
+                                willCollide = true;
+                            }
+
+                        }
+                    }
+                    if (!willCollide)
+                    {
+                        myPosition.X += (float)(Math.Cos(futureAngle) * speed);
+                        myPosition.Y += (float)(Math.Sin(futureAngle) * speed);
+                    }
+
                 }
 
+                var mousePos = Raylib.GetScreenToWorld2D(Raylib.GetMousePosition(), Engine.Camera);
                 if (Raylib.IsMouseButtonPressed(MOUSE_LEFT_BUTTON))
                 {
                     var currentAct = player.GetComponent<Act>();
@@ -70,9 +148,6 @@ namespace JustWind.Systems
                     }
                     var myRender2 = player.GetComponent<Render>();
                 }
-
-                var mousePos = Raylib.GetScreenToWorld2D(Raylib.GetMousePosition(), Engine.Camera);
-
 
                 if (Raylib.IsMouseButtonPressed(MOUSE_RIGHT_BUTTON))
                 {
@@ -89,6 +164,17 @@ namespace JustWind.Systems
                 if (Raylib.IsKeyDown(KeyboardKey.KEY_SPACE))
                 {
                     Console.WriteLine($"Mouse at {mousePos.X}, {mousePos.Y}");
+                }
+
+                if (Raylib.IsKeyDown(KeyboardKey.KEY_LEFT_SHIFT))
+                {
+                    var speedBuff = player.GetComponent<Buff<SpeedBuff>>();
+                    if (speedBuff == null)
+                    {
+                        var buff = new Buff<SpeedBuff>() { Value = 0.2f };
+                        player.Components.Add(buff);
+
+                    }
                 }
                 var myRender = player.GetComponent<Render>();
 

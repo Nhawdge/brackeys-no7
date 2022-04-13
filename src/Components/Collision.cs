@@ -1,8 +1,25 @@
+using Raylib_CsLo;
+
 namespace JustWind.Components
 {
-    public class Collision : Component
+    public class Collision<T> : Component where T : AbstractBoundingType
     {
         public CollisionStates CollisionState;
+        public T BoundType;
+    }
+
+    public abstract class AbstractBoundingType
+    {
+    }
+
+    public class CircleBoundType : AbstractBoundingType
+    {
+        public float Radius;
+    }
+
+    public class RectangleBoundType : AbstractBoundingType
+    {
+        public Rectangle Rectangle;
     }
 
     public enum CollisionStates

@@ -4,8 +4,7 @@ namespace JustWind.Components
 {
     public class EnemyAi : Component
     {
-        public List<Vector2> Path = new();
-        public int Speed = 5;
+        public List<Vector2> Path = new(); 
         public int Level = 1;
         public Vector2 NextTarget;
         public int NextIndex = 0;
@@ -14,7 +13,7 @@ namespace JustWind.Components
         public float MaxScariness = 250;
 
         public double LastTimeDamageDealt = 0;
-        public int Damage = 3;
+        public float Damage = 3;
 
         public EnemyAi()
         {

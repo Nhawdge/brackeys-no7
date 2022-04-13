@@ -19,7 +19,7 @@ namespace JustWind.Systems
 
         public override void Update(List<Entity> allEntities)
         {
-            var time = Raylib.GetTime();
+            var time = Raylib.GetFrameTime();
             var singleton = Engine.Singleton.GetComponent<Singleton>();
             var actionables = allEntities.FindAll(x => x.HasTypes(typeof(Act), typeof(Position)));
 
@@ -29,24 +29,27 @@ namespace JustWind.Systems
                 var myPosition = actor.GetComponent<Position>();
                 var myRender = actor.GetComponent<Render>();
 
+                action.ActionTimer += time;
                 if (action.Action == Actions.Bark)
                 {
-                    var targets = allEntities.Where(x => x.HasTypes(typeof(EnemyAi), typeof(Position)));
-                    if (action.LastActionTime < (time - 1))
+                    var leftDegrees = (myRender.Direction + 180 - 15) % 360;
+                    var rightDegrees = (myRender.Direction + 180 + 15) % 360;
+                    var leftX = myPosition.X + (Math.Cos(leftDegrees.ToRadians()) * 500);
+                    var leftY = myPosition.Y + (Math.Sin(leftDegrees.ToRadians()) * 500);
+                    var rightX = myPosition.X + Math.Cos(rightDegrees.ToRadians()) * 500;
+                    var rightY = myPosition.Y + Math.Sin(rightDegrees.ToRadians()) * 500;
+                    var leftCorner = new Vector2((int)leftX, (int)leftY);
+                    var rightCorner = new Vector2((int)rightX, (int)rightY);
+
+                    Raylib.DrawLineV(leftCorner, rightCorner, Raylib.BLACK);
+                    Raylib.DrawLineV(myPosition.AsVector(), rightCorner, Raylib.BLACK);
+                    Raylib.DrawLineV(myPosition.AsVector(), leftCorner, Raylib.BLACK);
+
+                    if (action.ActionTimer > action.CooldownInSeconds / action.TotalDamageTicks)
                     {
+                        var targets = allEntities.Where(x => x.HasTypes(typeof(EnemyAi), typeof(Position)));
                         action.TotalDamageTicks--;
 
-                        var leftDegrees = (myRender.Direction + 180 - 15) % 360;
-                        var rightDegrees = (myRender.Direction + 180 + 15) % 360;
-                        var leftX = myPosition.X + (Math.Cos(leftDegrees.ToRadians()) * 500);
-                        var leftY = myPosition.Y + (Math.Sin(leftDegrees.ToRadians()) * 500);
-                        var rightX = myPosition.X + Math.Cos(rightDegrees.ToRadians()) * 500;
-                        var rightY = myPosition.Y + Math.Sin(rightDegrees.ToRadians()) * 500;
-                        var leftCorner = new Vector2((int)leftX, (int)leftY);
-                        var rightCorner = new Vector2((int)rightX, (int)rightY);
-                        Raylib.DrawLine((int)leftCorner.X, (int)leftCorner.Y, (int)rightCorner.X, (int)rightCorner.Y, Raylib.BLACK);
-                        Raylib.DrawLine(myPosition.X, myPosition.Y, (int)rightCorner.X, (int)rightCorner.Y, Raylib.BLACK);
-                        Raylib.DrawLine(myPosition.X, myPosition.Y, (int)leftCorner.X, (int)leftCorner.Y, Raylib.BLACK);
 
                         var nearestTargets = allEntities
                             .Where(x => x.HasTypes(typeof(EnemyAi), typeof(Position)))
@@ -77,11 +80,10 @@ namespace JustWind.Systems
                                 {
                                     damage = (int)(action.DamagePerTick * .5f);
                                 }
-                                var debuff = target.GetComponent<Debuff>();
-                                if (debuff != null)
+                                var debuff = target.GetComponent<Debuff<DamageAmplify>>();
+                                if (debuff != null && debuff.DebuffType.ActionToAmplify == Actions.Bark)
                                 {
-                                    damage *= debuff.Amount;
-                                    Console.WriteLine($"Debuff Amplifying damage {damage}");
+                                    damage *= debuff.Value;
                                 }
                                 targetAi.Scariness -= Math.Min(targetAi.Scariness, damage);
                             }
@@ -96,10 +98,11 @@ namespace JustWind.Systems
                         .OrderBy(x => DistanceBetween(x.GetComponent<Position>().AsVector(), myPosition.AsVector()))
                         .Where(x => x.GetComponent<EnemyAi>().Scariness > 0);
 
-
-                    if (action.LastActionTime < (time - (action.DurationInSeconds / action.TotalDamageTicks)))
+                    Raylib.DrawCircleLines((int)myPosition.X, (int)myPosition.Y, 200, Raylib.GREEN);
+                    Raylib.DrawCircleLines((int)myPosition.X, (int)myPosition.Y, 400, Raylib.YELLOW);
+                    Raylib.DrawCircleLines((int)myPosition.X, (int)myPosition.Y, 750, Raylib.RED);
+                    if (action.ActionTimer > action.CooldownInSeconds / action.TotalDamageTicks)
                     {
-                        action.LastActionTime = time;
                         action.TotalDamageTicks--;
                         foreach (var nearestTarget in nearestTargets)
                         {
@@ -111,13 +114,16 @@ namespace JustWind.Systems
                             if (distancebetween < 200)
                             {
                                 damage = action.DamagePerTick;
-                                var targetDebuff = nearestTarget.GetComponent<Debuff>();
+                                var targetDebuff = nearestTarget.GetComponent<Debuff<DamageAmplify>>();
                                 if (targetDebuff == null)
                                 {
-                                    targetDebuff = new Debuff() { Type = Debuffs.AmplifyDamage };
+                                    targetDebuff = new Debuff<DamageAmplify>
+                                    {
+                                        DebuffType = new DamageAmplify { ActionToAmplify = Actions.Bark }
+                                    };
                                     nearestTarget.Components.Add(targetDebuff);
                                 }
-                                targetDebuff.Amount += .2f;
+                                targetDebuff.Value += .2f;
                             }
                             else if (distancebetween < 400)
                             {
@@ -128,7 +134,6 @@ namespace JustWind.Systems
                                 damage = (int)(action.DamagePerTick * .33f);
                             }
                             targetAi.Scariness -= Math.Min(targetAi.Scariness, damage);
-                            Console.WriteLine($"{targetAi.Scariness} -= {damage}, {Math.Min(targetAi.Scariness, damage)}");
                         }
                     }
                 }

@@ -43,6 +43,14 @@ namespace JustWind.Systems
                 {
                     singleton.HouseSafety = singleton.MaxHouseSafety;
                 }
+                if (singleton.HouseSafety <= 0)
+                {
+                    singleton.State = GameState.GameLoss;
+                }
+            }
+            if (singleton.State == GameState.GameLoss)
+            {
+                allEntities.RemoveAll(x => x.HasTypes(typeof(EnemyAi)));
             }
         }
     }
