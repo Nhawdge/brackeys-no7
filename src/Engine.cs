@@ -3,82 +3,88 @@ using JustWind.Entities;
 using JustWind.Systems;
 using JustWind.Components;
 
-public class Engine
+namespace JustWind
 {
-    public List<Entity> Entities = new List<Entity>();
-    public List<JustWind.Systems.System> Systems = new List<JustWind.Systems.System>();
-    public List<JustWind.Systems.System> NoCameraSystems = new List<JustWind.Systems.System>();
-    public Entity Singleton;
-    public Camera2D Camera;
-
-    public Engine()
+    public class Engine
     {
-        Systems.Add(new GenerationSystem(this));
-        Systems.Add(new AiMovementSystem(this));
-        Systems.Add(new HouseSafetySystem(this));
-        Systems.Add(new SoundSystem(this));
-        Systems.Add(new StateManagerSystem(this));
-        Systems.Add(new AnimationSystem(this));
-        Systems.Add(new CameraSystem(this));
-        Systems.Add(new RenderingSystem(this));
-        Systems.Add(new ControllableSystem(this));
-        Systems.Add(new ActionSystem(this));
+        public List<Entity> Entities = new List<Entity>();
+        public List<JustWind.Systems.System> Systems = new List<JustWind.Systems.System>();
+        public List<JustWind.Systems.System> NoCameraSystems = new List<JustWind.Systems.System>();
+        public Entity Singleton;
+        public Camera2D Camera;
 
-        NoCameraSystems.Add(new UiSystem(this));
-
-        var singleton = new Entity();
-        singleton.Components.Add(new Singleton { State = GameState.Menu });
-        Singleton = singleton;
-    }
-    public void Run()
-    {
-        Raylib.SetWindowState(ConfigFlags.FLAG_WINDOW_RESIZABLE);
-        //Raylib.SetConfigFlags(ConfigFlags.FLAG_VSYNC_HINT);
-
-        Raylib.InitWindow(1280, 720, "It's just the wind...");
-        Raylib.SetWindowIcon(Raylib.LoadImage("src/Assets/menu/icon.png"));
-
-        Raylib.SetTargetFPS(240);
-        //Raylib.SetWindowState(ConfigFlags.FLAG_WINDOW_UNDECORATED);
-
-        Camera = new Camera2D();
-        Camera.zoom = 1;
-
-        foreach (var system in Systems)
+        public Engine()
         {
-            system.Load();
+            Systems.Add(new GenerationSystem(this));
+            Systems.Add(new AiMovementSystem(this));
+            Systems.Add(new HouseSafetySystem(this));
+            Systems.Add(new SoundSystem(this));
+            Systems.Add(new StateManagerSystem(this));
+            Systems.Add(new AnimationSystem(this));
+            Systems.Add(new CameraSystem(this));
+            Systems.Add(new RenderingSystem(this));
+            Systems.Add(new ControllableSystem(this));
+            Systems.Add(new ActionSystem(this));
+            Systems.Add(new RoundSystem(this));
+
+            NoCameraSystems.Add(new UiSystem(this));
+
+            var singleton = new Entity();
+            singleton.Components.Add(new Singleton { State = GameState.Menu });
+            Singleton = singleton;
+
+            this.LoadConfiguration();
         }
-        foreach (var system in NoCameraSystems)
+        public void Run()
         {
-            system.Load();
-        }
+            Raylib.SetWindowState(ConfigFlags.FLAG_WINDOW_RESIZABLE);
+            //Raylib.SetConfigFlags(ConfigFlags.FLAG_VSYNC_HINT);
 
-        while (!Raylib.WindowShouldClose())
-        {
-            GameLoop();
-        }
-        Raylib.CloseWindow();
-    }
+            Raylib.InitWindow(1280, 720, "It's just the wind...");
+            Raylib.SetWindowIcon(Raylib.LoadImage("src/Assets/menu/icon.png"));
 
+            Raylib.SetTargetFPS(240);
+            //Raylib.SetWindowState(ConfigFlags.FLAG_WINDOW_UNDECORATED);
 
-    public void GameLoop()
-    {
-        Raylib.BeginDrawing();
-        Raylib.BeginMode2D(Camera);
-        Raylib.ClearBackground(Raylib.WHITE);
+            Camera = new Camera2D();
+            Camera.zoom = 1;
 
-        foreach (var system in Systems)
-        {
-            system.Update(Entities);
-        }
+            foreach (var system in Systems)
+            {
+                system.Load();
+            }
+            foreach (var system in NoCameraSystems)
+            {
+                system.Load();
+            }
 
-        Raylib.EndMode2D();
-
-        foreach (var system in NoCameraSystems)
-        {
-            system.Update(Entities);
+            while (!Raylib.WindowShouldClose())
+            {
+                GameLoop();
+            }
+            Raylib.CloseWindow();
         }
 
-        Raylib.EndDrawing();
+        public void GameLoop()
+        {
+            Raylib.BeginDrawing();
+            Raylib.BeginMode2D(Camera);
+            Raylib.ClearBackground(Raylib.WHITE);
+
+            foreach (var system in Systems)
+            {
+                system.Update(Entities);
+            }
+
+            Raylib.EndMode2D();
+
+            foreach (var system in NoCameraSystems)
+            {
+                system.Update(Entities);
+            }
+
+            Raylib.EndDrawing();
+        }
+
     }
 }

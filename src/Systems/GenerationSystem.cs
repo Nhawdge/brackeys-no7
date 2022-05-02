@@ -19,7 +19,7 @@ namespace JustWind.Systems
             Engine.Entities.Add(CreateNorthFence());
             Engine.Entities.Add(CreateSouthBarrier());
             Engine.Entities.Add(CreateEastBarrier());
-            Engine.Entities.Add(CreateSunTimer());
+            //Engine.Entities.Add(CreateSunTimer());
 
             Engine.Entities.Add(CreatePlayer());
         }
@@ -30,12 +30,23 @@ namespace JustWind.Systems
             if (singleton.State == GameState.Game)
             {
                 var allEnemies = allEntities.Where(x => x.HasTypes(typeof(EnemyAi)));
-                if (allEnemies.Count() < 4 && singleton.LastSpawnTime > 100)
+                if (allEnemies.Count() < 4 && singleton.LastSpawnTime > 10)
                 {
-                    Engine.Entities.Add(CreateRandomEnemy());
+                    Engine.Entities.Add(CreateRandomEnemy(singleton.Stats.Round));
                     singleton.LastSpawnTime = 0;
                 }
-                singleton.LastSpawnTime++;
+                singleton.LastSpawnTime += Raylib_CsLo.Raylib.GetFrameTime();
+            }
+            if (singleton.State == GameState.NextRound)
+            {
+                var allEnemies = allEntities.Where(x => x.HasTypes(typeof(EnemyAi))).ToList();
+                foreach (var enemy in allEnemies)
+                {
+                    Engine.Entities.Remove(enemy);
+                }
+                singleton.HouseSafety = singleton.MaxHouseSafety;
+
+                singleton.State = GameState.Game;
             }
         }
     }

@@ -117,7 +117,9 @@ namespace JustWind.Systems
                             //         nearestEdge.Y = tarRect.Y;
                             //     }
                             // }
+                            #if DEBUG
                             DrawCircleV(nearestPoint, 5, BLACK);
+                            #endif
                             if (CheckCollisionPointCircle(nearestPoint, predictedPos, myCollision.BoundType.Radius))
                             {
                                 willCollide = true;

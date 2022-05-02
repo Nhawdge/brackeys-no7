@@ -122,6 +122,10 @@ namespace JustWind.Systems
                 DrawRectangle(GetScreenWidth() / 2 - 100, 10, (int)width, 20, Raylib.RED);
                 DrawText($"{textToDraw}", (GetScreenWidth() / 2) - (MeasureText(textToDraw, 12) / 2), 10, 20, Raylib.WHITE);
 
+                var stats = singleton.Stats;
+                DrawText($"{stats.RoundTimer.ToString("0.0")} / {stats.RoundDuration.ToString("0.0")}", 60, 10, 20, GREEN);
+
+
             }
             else if (singleton.State == GameState.Paused)
             {
@@ -170,6 +174,30 @@ namespace JustWind.Systems
                     {
                         singleton.State = GameState.Game;
                         singleton.HouseSafety = singleton.MaxHouseSafety;
+                    }
+                    if (Raylib.CheckCollisionPointRec(mousePos, quitRect))
+                    {
+                        singleton.State = GameState.Exit;
+                    }
+                }
+            }
+            else if (singleton.State == GameState.GameWin)
+            {
+                DrawBackground();
+
+                Raylib.DrawText("You Win!", Raylib.GetScreenWidth() / 2 - Raylib.MeasureText("You Win!", 50) / 2, 100, 50, Raylib.GREEN);
+
+                var nextRoundRect = new Rectangle((GetScreenWidth() / 2 - 100), GetScreenHeight() / 2 - 100, 200, 50);
+                RayGui.GuiButton(nextRoundRect, "Next Round");
+
+                var quitRect = new Rectangle((GetScreenWidth() / 2 - 100), GetScreenHeight() / 2, 200, 50);
+                RayGui.GuiButton(quitRect, "Rage Quit");
+
+                if (Raylib.IsMouseButtonPressed(Raylib.MOUSE_LEFT_BUTTON))
+                {
+                    if (Raylib.CheckCollisionPointRec(mousePos, nextRoundRect))
+                    {
+                        singleton.State = GameState.NextRound;
                     }
                     if (Raylib.CheckCollisionPointRec(mousePos, quitRect))
                     {

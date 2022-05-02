@@ -29,13 +29,14 @@ namespace JustWind.Entities
             return entity;
         }
 
-        public static Entity CreateRandomEnemy()
+        public static Entity CreateRandomEnemy(int round = 1)
         {
             var entity = new Entity();
             var rand = new Random();
 
             //entity.Components.Add(new Position { X = Raylib_CsLo.Raylib.GetScreenWidth() / 2, Y = Raylib_CsLo.Raylib.GetScreenHeight() / 2, Speed = 5, Width = 256, Height = 256 });
-            var level = rand.Next(1, 4);
+            var level = round % 3 + 1;
+            Console.WriteLine("Enemy Generated with level " + level);
             var animationSet = level switch
             {
                 1 => AnimationData.ScaryOptionsL1,
@@ -50,11 +51,10 @@ namespace JustWind.Entities
 
             var path = PathData.GetRandomPath();
 
-            entity.Components.Add(new EnemyAi(path, level));
+            entity.Components.Add(new EnemyAi(path, round));
 
-            var speed = 5 + (level * 2);
+            var speed = 5 + (round * 2);
             entity.Components.Add(new Position { X = (int)path.FirstOrDefault().X, Y = (int)path.FirstOrDefault().Y, Speed = speed, Width = 256, Height = 256 });
-            Console.WriteLine($"Spawned Enemy Level: {level}");
             return entity;
         }
 
@@ -191,16 +191,16 @@ namespace JustWind.Entities
 
         }
 
-        public static Entity CreateSunTimer()
-        {
-            var entity = new Entity();
-            var rand = new Random();
+        // public static Entity CreateSunTimer()
+        // {
+        //     var entity = new Entity();
+        //     var rand = new Random();
 
-            entity.Components.Add(new Position { X = 1000, Y = 1000, Speed = 0, Width = 512, Height = 512, Direction = 90 });
-            entity.Components.Add(new Render());
-            entity.Components.Add(new Animation(AnimationData.SunTimer));
+        //     entity.Components.Add(new Position { X = 1000, Y = 1000, Speed = 0, Width = 512, Height = 512, Direction = 90 });
+        //     entity.Components.Add(new Render());
+        //     entity.Components.Add(new Animation(AnimationData.SunTimer));
 
-            return entity;
-        }
+        //     return entity;
+        // }
     }
 }

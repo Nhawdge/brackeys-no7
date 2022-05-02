@@ -40,11 +40,11 @@ namespace JustWind.Systems
                     var rightY = myPosition.Y + Math.Sin(rightDegrees.ToRadians()) * 500;
                     var leftCorner = new Vector2((int)leftX, (int)leftY);
                     var rightCorner = new Vector2((int)rightX, (int)rightY);
-
+#if DEBUG
                     Raylib.DrawLineV(leftCorner, rightCorner, Raylib.BLACK);
                     Raylib.DrawLineV(myPosition.AsVector(), rightCorner, Raylib.BLACK);
                     Raylib.DrawLineV(myPosition.AsVector(), leftCorner, Raylib.BLACK);
-
+#endif
                     if (action.ActionTimer > action.CooldownInSeconds / action.TotalDamageTicks)
                     {
                         var targets = allEntities.Where(x => x.HasTypes(typeof(EnemyAi), typeof(Position)));
@@ -97,10 +97,11 @@ namespace JustWind.Systems
                         .Where(x => x.HasTypes(typeof(EnemyAi), typeof(Position)))
                         .OrderBy(x => DistanceBetween(x.GetComponent<Position>().AsVector(), myPosition.AsVector()))
                         .Where(x => x.GetComponent<EnemyAi>().Scariness > 0);
-
+#if DEBUG
                     Raylib.DrawCircleLines((int)myPosition.X, (int)myPosition.Y, 200, Raylib.GREEN);
                     Raylib.DrawCircleLines((int)myPosition.X, (int)myPosition.Y, 400, Raylib.YELLOW);
                     Raylib.DrawCircleLines((int)myPosition.X, (int)myPosition.Y, 750, Raylib.RED);
+#endif
                     if (action.ActionTimer > action.CooldownInSeconds / action.TotalDamageTicks)
                     {
                         action.TotalDamageTicks--;

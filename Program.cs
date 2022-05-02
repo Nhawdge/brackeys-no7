@@ -1,2 +1,4 @@
-﻿var engine = new Engine();
+﻿using JustWind;
+
+var engine = new Engine();
 engine.Run();
