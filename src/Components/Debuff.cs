@@ -1,13 +1,17 @@
 namespace JustWind.Components
 {
-    public class Debuff : Component
+    public class Debuff<T> : Component where T : AbstractDebuffType
     {
-        public Debuffs Type;
-        public float Amount = 1;
+        public float Value = 1;
+        public T DebuffType;
     }
 
-    public enum Debuffs
+    public abstract class AbstractDebuffType
     {
-        AmplifyDamage
+    }
+
+    public class DamageAmplify : AbstractDebuffType
+    {
+        public Actions ActionToAmplify;
     }
 }

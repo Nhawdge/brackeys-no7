@@ -139,6 +139,28 @@ namespace JustWind.Components
             { 0, new Frame("src/Assets/dog/dog_bark.png") },
         };
 
+        public static readonly Dictionary<int, Frame> SunTimer = new Dictionary<int, Frame>() {
+            { 0, new Frame("src/Assets/scene/Sun_Timer/Sun_Timer0000.png", 15) },
+            { 1, new Frame("src/Assets/scene/Sun_Timer/Sun_Timer0001.png", 15) },
+            { 2, new Frame("src/Assets/scene/Sun_Timer/Sun_Timer0002.png", 15) },
+            { 3, new Frame("src/Assets/scene/Sun_Timer/Sun_Timer0003.png", 15) },
+            { 4, new Frame("src/Assets/scene/Sun_Timer/Sun_Timer0004.png", 15) },
+            { 5, new Frame("src/Assets/scene/Sun_Timer/Sun_Timer0005.png", 15) },
+            { 6, new Frame("src/Assets/scene/Sun_Timer/Sun_Timer0006.png", 15) },
+            { 7, new Frame("src/Assets/scene/Sun_Timer/Sun_Timer0007.png", 15) },
+            { 8, new Frame("src/Assets/scene/Sun_Timer/Sun_Timer0008.png", 15) },
+            { 9, new Frame("src/Assets/scene/Sun_Timer/Sun_Timer0009.png", 15) },
+            { 10, new Frame("src/Assets/scene/Sun_Timer/Sun_Timer0010.png", 15) },
+            { 11, new Frame("src/Assets/scene/Sun_Timer/Sun_Timer0011.png", 15) },
+            { 12, new Frame("src/Assets/scene/Sun_Timer/Sun_Timer0012.png", 15) },
+            { 13, new Frame("src/Assets/scene/Sun_Timer/Sun_Timer0013.png", 15) },
+            { 14, new Frame("src/Assets/scene/Sun_Timer/Sun_Timer0014.png", 15) },
+            { 15, new Frame("src/Assets/scene/Sun_Timer/Sun_Timer0015.png", 15) },
+            { 16, new Frame("src/Assets/scene/Sun_Timer/Sun_Timer0016.png", 15) },
+            { 17, new Frame("src/Assets/scene/Sun_Timer/Sun_Timer0017.png", 15) },
+            { 18, new Frame("src/Assets/scene/Sun_Timer/Sun_Timer0018.png", 15) },
+         };
+
         #region Demons (L1)
         public static readonly Dictionary<int, Frame> Bat;
         public static readonly Dictionary<int, Frame> Demon;

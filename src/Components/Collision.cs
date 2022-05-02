@@ -2,22 +2,22 @@ using Raylib_CsLo;
 
 namespace JustWind.Components
 {
-    public class Collision<IBoundingType> : Component
+    public class Collision<T> : Component where T : AbstractBoundingType
     {
         public CollisionStates CollisionState;
-        public IBoundingType BoundType;
+        public T BoundType;
     }
 
-    public interface IBoundingType
+    public abstract class AbstractBoundingType
     {
     }
 
-    public class CircleBoundType : IBoundingType
+    public class CircleBoundType : AbstractBoundingType
     {
         public float Radius;
     }
 
-    public class RectangleBoundType : IBoundingType
+    public class RectangleBoundType : AbstractBoundingType
     {
         public Rectangle Rectangle;
     }

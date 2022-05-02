@@ -19,8 +19,12 @@ namespace JustWind.Systems
 
         public override void Load()
         {
+            var singleton = Engine.Singleton.GetComponent<Singleton>();
+            var preferences = singleton.Options;
+            var volume = preferences.MusicVolume;
+
             CurrentMusic = SoundData.TitleMusic;
-            Raylib.SetMusicVolume(CurrentMusic, 0.5f);
+            Raylib.SetMusicVolume(CurrentMusic, volume);
             Raylib.PlayMusicStream(CurrentMusic);
         }
 
@@ -28,6 +32,7 @@ namespace JustWind.Systems
         {
             Raylib.UpdateMusicStream(CurrentMusic);
             var singleton = Engine.Singleton.GetComponent<Singleton>();
+            var preferences = singleton.Options;
 
             if (singleton.State == GameState.Menu
                 || singleton.State == GameState.MenuCredits
@@ -55,6 +60,8 @@ namespace JustWind.Systems
                 Raylib.PlaySound(sound.SoundToPlay);
                 entity.Components.Remove(sound);
             }
+
+            Raylib.SetMusicVolume(CurrentMusic, preferences.MusicVolume);
         }
     }
     public static class SoundData

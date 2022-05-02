@@ -24,7 +24,7 @@ namespace JustWind.Components
         {
             Path = path;
             Level = level;
-            Scariness = 250 + ((level - 1) * 50);
+            Scariness = 250 + ((level - 1) * 10);
             MaxScariness = Scariness;
             Damage = 2 + level;
         }
