@@ -64,7 +64,7 @@ namespace JustWind.Systems
             {
                 var rect = new Rectangle(100, 100, GetScreenWidth() - 200, GetScreenHeight() - 200);
                 RayGui.GuiPanel(rect);
-                RayGui.GuiTextBox(rect, "1. Defend the home at all costs until the humans return", 72, false);
+                RayGui.GuiTextBox(rect, "Defend the home at all costs until the humans return \n\nControls: \nBark: Left Mouse Button \nGrowl: Right Mouse Button", 72, false);
 
                 var backRect = new Rectangle(GetScreenWidth() - 50, 10, MeasureText("Back", 20), 20);
                 RayGui.GuiTextBox(backRect, "Back", 20, false);
@@ -101,7 +101,7 @@ namespace JustWind.Systems
             }
             if (singleton.State == GameState.Game)
             {
-                DrawText(GetFPS().ToString(), 10, 10, 20, GREEN);
+                DrawText($"FPS: {GetFPS().ToString()}", 10, 10, 20, GREEN);
                 var corner = new Vector2((GetScreenWidth() - 75), 10);
                 var offset = GetScreenToWorld2D(corner, Engine.Camera);
 
@@ -123,7 +123,9 @@ namespace JustWind.Systems
                 DrawText($"{textToDraw}", (GetScreenWidth() / 2) - (MeasureText(textToDraw, 12) / 2), 10, 20, Raylib.WHITE);
 
                 var stats = singleton.Stats;
-                DrawText($"{stats.RoundTimer.ToString("0.0")} / {stats.RoundDuration.ToString("0.0")}", 60, 10, 20, GREEN);
+                DrawText($"Time Remaining: {(stats.RoundDuration - stats.RoundTimer).ToString("0.0")}", 10, 40, 20, GREEN);
+
+                DrawText($"Round: {stats.Round}", 10, 70, 20, GREEN);
 
 
             }
