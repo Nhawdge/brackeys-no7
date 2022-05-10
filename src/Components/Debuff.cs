@@ -3,6 +3,7 @@ namespace JustWind.Components
     public class Debuff<T> : Component where T : AbstractDebuffType
     {
         public float Value = 1;
+        public int Intensity = 1;
         public T DebuffType;
     }
 

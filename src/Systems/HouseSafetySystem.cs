@@ -51,6 +51,7 @@ namespace JustWind.Systems
             if (singleton.State == GameState.GameLoss)
             {
                 allEntities.RemoveAll(x => x.HasTypes(typeof(EnemyAi)));
+                singleton.Stats.Round = 1;                
             }
         }
     }

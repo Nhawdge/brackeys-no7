@@ -50,7 +50,6 @@ namespace JustWind.Systems
 
                 if (myState.CurrentState != newState)
                 {
-                    Console.WriteLine($"{actor.Id} is {newState}, was {myState.CurrentState}");
                     switch (newState)
                     {
                         case CharacterState.Bark:
