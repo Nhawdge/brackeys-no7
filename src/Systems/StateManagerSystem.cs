@@ -91,10 +91,8 @@ namespace JustWind.Systems
                     myAi.EnemyState = EnemyStates.Transition;
                     myAi.LastTimeDamageDealt = 0;
                 }
-                Console.WriteLine($"Transition {myAi.LastTimeDamageDealt}");
                 if (myAi.EnemyState == EnemyStates.Transition)
                 {
-                    Console.WriteLine($"Transition - {myAi.LastTimeDamageDealt}");
                     myAi.LastTimeDamageDealt += Raylib_CsLo.Raylib.GetFrameTime();
                     if (myAi.LastTimeDamageDealt > 1)
                     {
