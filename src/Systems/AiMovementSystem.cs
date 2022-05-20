@@ -13,7 +13,7 @@ namespace JustWind.Systems
         }
 
         public override void Load() { }
-        
+
         public override void Update(List<Entity> allEntities)
         {
             var rand = new Random();
@@ -26,11 +26,9 @@ namespace JustWind.Systems
                     var myPosition = entity.GetComponent<Position>();
                     var myAi = entity.GetComponent<EnemyAi>();
                     var speed = myPosition.Speed * 30 * Raylib.GetFrameTime();
-                    if (myAi.Scariness == 0)
+                    if (myAi.EnemyState == EnemyStates.Transition)
                     {
-                        myAi.Scariness = -1;
-                        var myAnimation = entity.GetComponent<Animation>();
-                        myAnimation.Animations = AnimationData.EnemyOptions.ElementAt(rand.Next(0, AnimationData.EnemyOptions.Count));
+                        continue;
                     }
                     if (myAi.NextTarget == new Vector2(0) && myAi.Path != null)
                     {

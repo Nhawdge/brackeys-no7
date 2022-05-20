@@ -4,16 +4,16 @@ namespace JustWind.Components
 {
     public class EnemyAi : Component
     {
-        public List<Vector2> Path = new(); 
+        public List<Vector2> Path = new();
         public int Level = 1;
         public Vector2 NextTarget;
         public int NextIndex = 0;
         public bool PathLoops = true;
         public float Scariness = 250;
         public float MaxScariness = 250;
-
         public double LastTimeDamageDealt = 0;
         public float Damage = 3;
+        public EnemyStates EnemyState;
 
         public EnemyAi()
         {
@@ -28,6 +28,11 @@ namespace JustWind.Components
             MaxScariness = Scariness;
             Damage = 2 + level;
         }
+    }
+    public enum EnemyStates{
+        Evil,
+        Transition,
+        Peaceful
     }
 
     public static class PathData
