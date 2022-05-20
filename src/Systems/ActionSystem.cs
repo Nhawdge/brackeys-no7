@@ -98,9 +98,8 @@ namespace JustWind.Systems
                         .OrderBy(x => DistanceBetween(x.GetComponent<Position>().AsVector(), myPosition.AsVector()))
                         .Where(x => x.GetComponent<EnemyAi>().Scariness > 0);
 #if DEBUG
-                    Raylib.DrawCircleLines((int)myPosition.X, (int)myPosition.Y, 200, Raylib.GREEN);
-                    Raylib.DrawCircleLines((int)myPosition.X, (int)myPosition.Y, 400, Raylib.YELLOW);
-                    Raylib.DrawCircleLines((int)myPosition.X, (int)myPosition.Y, 750, Raylib.RED);
+                    Raylib.DrawCircleLines((int)myPosition.X, (int)myPosition.Y, 400, Raylib.GREEN);
+                    Raylib.DrawCircleLines((int)myPosition.X, (int)myPosition.Y, 750, Raylib.YELLOW);
 #endif
                     if (action.ActionTimer > action.CooldownInSeconds / action.TotalDamageTicks)
                     {
@@ -112,7 +111,7 @@ namespace JustWind.Systems
                             var distancebetween = DistanceBetween(targetPosition.AsVector(), myPosition.AsVector());
                             var damage = 0;
 
-                            if (distancebetween < 200)
+                            if (distancebetween < 400)
                             {
                                 damage = action.DamagePerTick;
                                 var targetDebuff = nearestTarget.GetComponent<Debuff<DamageAmplify>>();
@@ -125,15 +124,12 @@ namespace JustWind.Systems
                                     nearestTarget.Components.Add(targetDebuff);
                                 }
                                 targetDebuff.Value += .2f;
-                            }
-                            else if (distancebetween < 400)
-                            {
-                                damage = (int)(action.DamagePerTick * .66f);
+                                targetDebuff.Intensity++;
                             }
                             else if (distancebetween < 750)
                             {
-                                damage = (int)(action.DamagePerTick * .33f);
-                            }
+                                damage = (int)(action.DamagePerTick * .66f);
+                            }                         
                             targetAi.Scariness -= Math.Min(targetAi.Scariness, damage);
                         }
                     }

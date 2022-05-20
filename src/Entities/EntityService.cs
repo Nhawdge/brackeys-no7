@@ -35,8 +35,8 @@ namespace JustWind.Entities
             var rand = new Random();
 
             //entity.Components.Add(new Position { X = Raylib_CsLo.Raylib.GetScreenWidth() / 2, Y = Raylib_CsLo.Raylib.GetScreenHeight() / 2, Speed = 5, Width = 256, Height = 256 });
-            var level = round % 3 + 1;
-            Console.WriteLine("Enemy Generated with level " + level);
+            var level = round % 3;
+            //Console.WriteLine("Enemy Generated with level " + level);
             var animationSet = level switch
             {
                 1 => AnimationData.ScaryOptionsL1,

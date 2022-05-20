@@ -30,7 +30,7 @@ namespace JustWind.Systems
             if (singleton.State == GameState.Game)
             {
                 var allEnemies = allEntities.Where(x => x.HasTypes(typeof(EnemyAi)));
-                if (allEnemies.Count() < 4 && singleton.LastSpawnTime > 10)
+                if (allEnemies.Count() < 4 && singleton.LastSpawnTime > 5)
                 {
                     Engine.Entities.Add(CreateRandomEnemy(singleton.Stats.Round));
                     singleton.LastSpawnTime = 0;

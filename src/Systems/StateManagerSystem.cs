@@ -1,3 +1,4 @@
+using System;
 using JustWind.Components;
 using JustWind.Entities;
 
@@ -50,7 +51,6 @@ namespace JustWind.Systems
 
                 if (myState.CurrentState != newState)
                 {
-                    Console.WriteLine($"{actor.Id} is {newState}, was {myState.CurrentState}");
                     switch (newState)
                     {
                         case CharacterState.Bark:
@@ -66,6 +66,44 @@ namespace JustWind.Systems
                     }
                     myState.CurrentState = newState;
                 }
+            }
+            var rand = new Random();
+
+            foreach (var enemy in allEntities.FindAll(x => x.HasTypes(typeof(EnemyAi))))
+            {
+                var myAi = enemy.GetComponent<EnemyAi>();
+                var currentState = myAi.EnemyState;
+                var newState = myAi.EnemyState;
+
+                if (myAi.EnemyState == EnemyStates.Peaceful)
+                {
+                    continue;
+                }
+
+                if (myAi.Scariness > 0)
+                {
+                    newState = EnemyStates.Evil;
+                }
+                else if (myAi.Scariness <= 0 && myAi.EnemyState == EnemyStates.Evil)
+                {
+                    var myAnimation = enemy.GetComponent<Animation>();
+                    myAnimation.Animations = AnimationData.Transition;
+                    myAi.EnemyState = EnemyStates.Transition;
+                    myAi.LastTimeDamageDealt = 0;
+                }
+                if (myAi.EnemyState == EnemyStates.Transition)
+                {
+                    myAi.LastTimeDamageDealt += Raylib_CsLo.Raylib.GetFrameTime();
+                    if (myAi.LastTimeDamageDealt > 1)
+                    {
+                        myAi.EnemyState = EnemyStates.Peaceful;
+                        var myAnimation = enemy.GetComponent<Animation>();
+
+                        myAnimation.Animations = AnimationData.EnemyOptions.ElementAt(rand.Next(0, AnimationData.EnemyOptions.Count));
+
+                    }
+                }
+
             }
         }
     }

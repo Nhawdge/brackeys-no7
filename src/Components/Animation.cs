@@ -105,6 +105,11 @@ namespace JustWind.Components
                 { 3, new Frame("src/Assets/enemies/trex4.png") },
             };
 
+            Transition = new() {
+                { 0, new Frame("src/Assets/Enemies/transition1.png" )},
+                { 1, new Frame("src/Assets/Enemies/transition2.png" )},
+            };
+
             ScaryOptionsL1 = new() { AnimationData.Demon, AnimationData.Bat };
             ScaryOptionsL2 = new() { AnimationData.AlienEye, AnimationData.GreenGuy };
             ScaryOptionsL3 = new() { AnimationData.DinoRed, AnimationData.DinoGreen };
@@ -186,6 +191,8 @@ namespace JustWind.Components
         public static readonly Dictionary<int, Frame> ScooterKid;
         public static readonly Dictionary<int, Frame> PersonA;
         public static readonly Dictionary<int, Frame> PersonB;
+        public static readonly Dictionary<int, Frame> Transition;
+
         #endregion
 
     }

@@ -13,10 +13,12 @@ namespace JustWind.Systems
         }
 
         public Texture backgroundTexture;
+        private Texture DebuffTexture;
 
         public override void Load()
         {
             backgroundTexture = LoadTexture("src/Assets/scene/scene_4096x4096.png");
+            DebuffTexture = LoadTexture("src/Assets/enemies/growl_buff.png");
         }
 
         public override void Update(List<Entity> allEntities)
@@ -38,7 +40,7 @@ namespace JustWind.Systems
                         var myPosition = entity.GetComponent<Position>();
 
                         DrawTexturePro(myRender.Texture, myRender.Rectangle, myPosition.Rectangle, myPosition.GetRectCenter(), myRender.Direction - 90, Raylib.WHITE);
-                       
+
                         if (entity.HasTypes(typeof(Collision<CircleBoundType>)))
                         {
                             var collision = entity.GetComponent<Collision<CircleBoundType>>();
@@ -61,11 +63,18 @@ namespace JustWind.Systems
                                 DrawRectangle((int)myPosition.X - 54, (int)myPosition.Y - (int)(myPosition.Rectangle.height / 2), 108, 20, Raylib.BLACK);
                                 DrawRectangle((int)myPosition.X - 50, (int)myPosition.Y - (int)(myPosition.Rectangle.height / 2) + 5, (int)width, 10, Raylib.RED);
 
+                                if (entity.HasTypes(typeof(Debuff<DamageAmplify>)))
+                                {
+                                    var debuff = entity.GetComponent<Debuff<DamageAmplify>>();
+                                    var dest = new Rectangle((int)myPosition.X - 25, (int)myPosition.Y - (int)(myPosition.Rectangle.height / 2) - 48, 48, 48);
+
+                                    DrawTexturePro(DebuffTexture, new Rectangle(0, 0, DebuffTexture.width, DebuffTexture.height), dest, new Vector2(0), 0f, Raylib.WHITE);
+                                    DrawText(debuff.Intensity.ToString(), dest.x + 50,  (int)myPosition.Y - (int)(myPosition.Rectangle.height / 2) - 48, 24, Raylib.BLACK);
+                                    DrawText(debuff.Intensity.ToString(), dest.x + 50,  (int)myPosition.Y - (int)(myPosition.Rectangle.height / 2) - 48, 20, Raylib.WHITE);
+
+                                }
                             }
-                            //DrawRectangle(GetScreenWidth() / 2 - 100, 10, (int)width, 20, Raylib.RED);
-                            //DrawText($"{textToDraw}", (GetScreenWidth() / 2) - (MeasureText(textToDraw, 12) / 2), 10, 20, Raylib.WHITE);
                         }
-                    
                     }
                 }
             }

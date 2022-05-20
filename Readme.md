@@ -24,7 +24,7 @@ dotnet publish -c Release -r win-x64 --self-contained true -p:PublishSingleFile=
 * [X] Yard Collision
 * [ ] Transformation animation
 * [x] House Safety level
-* [ ] Round ending
+* [X] Round ending
 * [X] Pause/Exit
 * [x]  also, add localizations for Finland so you can have Finnish Growl and Finnish Bark
 

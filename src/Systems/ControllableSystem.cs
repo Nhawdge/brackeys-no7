@@ -163,11 +163,6 @@ namespace JustWind.Systems
                     }
                 }
 
-                if (Raylib.IsKeyDown(KeyboardKey.KEY_SPACE))
-                {
-                    Console.WriteLine($"Mouse at {mousePos.X}, {mousePos.Y}");
-                }
-
                 if (Raylib.IsKeyDown(KeyboardKey.KEY_LEFT_SHIFT))
                 {
                     var speedBuff = player.GetComponent<Buff<SpeedBuff>>();
