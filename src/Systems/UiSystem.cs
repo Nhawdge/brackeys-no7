@@ -124,14 +124,24 @@ namespace JustWind.Systems
                     {
                         var keyPressed = (char)keyPress;
                         message += keyPressed;
-                        Console.WriteLine($"{key}, {keyPressed}");
                     }
                     if (key == (int)KeyboardKey.KEY_ENTER)
                     {
                         this.Engine.Network.SendString(message);
-                        Console.WriteLine("entered");
+                        this.message = string.Empty;
                     }
                 }
+                var rect = new Rectangle(100, 100, GetScreenWidth() - 200, GetScreenHeight() - 200);
+                DrawRectangleLinesEx(rect, 2, RED);
+                var messages = Engine.Singleton.GetComponents<Message>();
+                var index = 0;
+                foreach (var message in messages)
+                {
+                    DrawText(message.Info, 100, 100 + (20 * index), 20, BLACK);
+                    index++;
+                }
+
+
             }
             if (singleton.State == GameState.Exit)
             {

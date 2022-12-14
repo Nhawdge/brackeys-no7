@@ -14,7 +14,7 @@ namespace JustWind
         public Entity Singleton;
         public Camera2D Camera;
         public Thread NetworkThread;
-        public INetwork Network;
+        public AbstractNetwork Network;
 
         public Engine()
         {

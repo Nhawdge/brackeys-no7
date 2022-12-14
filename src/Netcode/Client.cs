@@ -4,67 +4,43 @@ using System.Text;
 
 namespace JustWind.Netcode
 {
-    public class NetClient : INetwork
+    public class NetClient : AbstractNetwork
     {
-        private bool IsRunning = true;
-        private Engine engine;
-
-        private string Payload { get; set; } = string.Empty;
-        public NetClient(Engine engine)
+        public NetClient(Engine engine) : base(engine)
         {
-            this.engine = engine;
         }
 
-        public void SendString(string message)
-        {
-            this.Payload = message;
-            Console.WriteLine("Sending string from client");
-        }
-
-        public async void Start()
+        public override async void Start()
         {
             IPHostEntry ipHostInfo = await Dns.GetHostEntryAsync(Dns.GetHostName());
             IPAddress ipAddress = ipHostInfo.AddressList[0];
             IPEndPoint ipEndPoint = new(ipAddress, 11_000);
 
-            using Socket client = new(ipEndPoint.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
+            using Socket client = new(
+                ipEndPoint.AddressFamily,
+                SocketType.Stream,
+                ProtocolType.Tcp);
+            var isRunning = true;
             await client.ConnectAsync(ipEndPoint);
-            while (IsRunning)
+            while (isRunning)
             {
-                var message = "";
-                if (!string.IsNullOrEmpty(Payload))
+                var message = this.Payload;
+                if (ReadyToSend)
                 {
-                    message = Payload;
+                    this.ReadyToSend = false;
+                    var messageBytes = Encoding.UTF8.GetBytes(message);
+                    await client.SendAsync(messageBytes, SocketFlags.None);
+                    this.SaveMessage($"Servr: {message}");
                 }
-                Console.WriteLine($"Sending: {message}");
-                // Send message.
-                var messageBytes = Encoding.UTF8.GetBytes(message);
-                _ = await client.SendAsync(messageBytes, SocketFlags.None);
-                Console.WriteLine($"Socket client sent message: \"{message}\"");
 
-                // Receive ack.
                 var buffer = new byte[1_024];
-                var received = await client.ReceiveAsync(buffer, SocketFlags.None);
-                var response = Encoding.UTF8.GetString(buffer, 0, received);
-                Console.WriteLine($"Received: {response}");
-                if (response == "<|ACK|>")
+                client.ReceiveAsync(buffer, SocketFlags.None).ContinueWith(x =>
                 {
-                    Console.WriteLine(
-                        $"Socket client received acknowledgment: \"{response}\"");
-                    //break;
-                }
-                // Sample output:
-                //     Socket client sent message: "Hi friends 👋!<|EOM|>"
-                //     Socket client received acknowledgment: "<|ACK|>"
+                    var response = Encoding.UTF8.GetString(buffer, 0, x.Result);
+                    this.SaveMessage($"Client: {response}");
+                });
             }
             client.Shutdown(SocketShutdown.Both);
-
         }
-
-        public void Stop()
-        {
-            this.IsRunning = false;
-        }
-
     }
 }
