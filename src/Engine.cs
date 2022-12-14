@@ -2,6 +2,7 @@ using Raylib_CsLo;
 using JustWind.Entities;
 using JustWind.Systems;
 using JustWind.Components;
+using JustWind.Netcode;
 
 namespace JustWind
 {
@@ -12,6 +13,8 @@ namespace JustWind
         public List<JustWind.Systems.System> NoCameraSystems = new List<JustWind.Systems.System>();
         public Entity Singleton;
         public Camera2D Camera;
+        public Thread NetworkThread;
+        public INetwork Network;
 
         public Engine()
         {
@@ -26,6 +29,7 @@ namespace JustWind
             Systems.Add(new ControllableSystem(this));
             Systems.Add(new ActionSystem(this));
             Systems.Add(new RoundSystem(this));
+            Systems.Add(new NetworkSystem(this));
 
             NoCameraSystems.Add(new UiSystem(this));
 
@@ -63,6 +67,8 @@ namespace JustWind
                 GameLoop();
             }
             Raylib.CloseWindow();
+            this.Network.Stop();
+            this.NetworkThread.Join();
         }
 
         public void GameLoop()

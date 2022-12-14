@@ -32,12 +32,13 @@ namespace JustWind.Systems
                 action.ActionTimer += time;
                 if (action.Action == Actions.Bark)
                 {
-                    var leftDegrees = (myRender.Direction + 180 - 15) % 360;
-                    var rightDegrees = (myRender.Direction + 180 + 15) % 360;
-                    var leftX = myPosition.X + (Math.Cos(leftDegrees.ToRadians()) * 500);
-                    var leftY = myPosition.Y + (Math.Sin(leftDegrees.ToRadians()) * 500);
-                    var rightX = myPosition.X + Math.Cos(rightDegrees.ToRadians()) * 500;
-                    var rightY = myPosition.Y + Math.Sin(rightDegrees.ToRadians()) * 500;
+                    var leftDegrees = (myRender.Direction + 180 - 25) % 360;
+                    var rightDegrees = (myRender.Direction + 180 + 25) % 360;
+                    var distance = 750;
+                    var leftX = myPosition.X + (Math.Cos(leftDegrees.ToRadians()) * distance);
+                    var leftY = myPosition.Y + (Math.Sin(leftDegrees.ToRadians()) * distance);
+                    var rightX = myPosition.X + Math.Cos(rightDegrees.ToRadians()) * distance;
+                    var rightY = myPosition.Y + Math.Sin(rightDegrees.ToRadians()) * distance;
                     var leftCorner = new Vector2((int)leftX, (int)leftY);
                     var rightCorner = new Vector2((int)rightX, (int)rightY);
 #if DEBUG

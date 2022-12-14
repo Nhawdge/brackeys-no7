@@ -44,7 +44,9 @@ namespace JustWind.Systems
                         if (entity.HasTypes(typeof(Collision<CircleBoundType>)))
                         {
                             var collision = entity.GetComponent<Collision<CircleBoundType>>();
+#if DEBUG
                             DrawCircleLines((int)myPosition.Rectangle.X, (int)myPosition.Rectangle.Y, collision.BoundType.Radius, Raylib.GREEN);
+#endif
                         }
                         if (entity.HasTypes(typeof(Collision<RectangleBoundType>)))
                         {
@@ -69,8 +71,8 @@ namespace JustWind.Systems
                                     var dest = new Rectangle((int)myPosition.X - 25, (int)myPosition.Y - (int)(myPosition.Rectangle.height / 2) - 48, 48, 48);
 
                                     DrawTexturePro(DebuffTexture, new Rectangle(0, 0, DebuffTexture.width, DebuffTexture.height), dest, new Vector2(0), 0f, Raylib.WHITE);
-                                    DrawText(debuff.Intensity.ToString(), dest.x + 50,  (int)myPosition.Y - (int)(myPosition.Rectangle.height / 2) - 48, 24, Raylib.BLACK);
-                                    DrawText(debuff.Intensity.ToString(), dest.x + 50,  (int)myPosition.Y - (int)(myPosition.Rectangle.height / 2) - 48, 20, Raylib.WHITE);
+                                    DrawText(debuff.Intensity.ToString(), dest.x + 50, (int)myPosition.Y - (int)(myPosition.Rectangle.height / 2) - 48, 24, Raylib.BLACK);
+                                    DrawText(debuff.Intensity.ToString(), dest.x + 50, (int)myPosition.Y - (int)(myPosition.Rectangle.height / 2) - 48, 20, Raylib.WHITE);
 
                                 }
                             }

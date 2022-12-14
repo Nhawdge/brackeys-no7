@@ -1,6 +1,7 @@
 using System.Numerics;
 using JustWind.Components;
 using JustWind.Entities;
+using JustWind.Netcode;
 using Raylib_CsLo;
 using static Raylib_CsLo.Raylib;
 
@@ -10,6 +11,7 @@ namespace JustWind.Systems
     {
         public Texture MenuTexture;
 
+        private string message = string.Empty;
         public UiSystem(Engine engine) : base(engine)
         {
         }
@@ -31,11 +33,16 @@ namespace JustWind.Systems
                 var startRect = new Rectangle((GetScreenWidth() / 2 - 100), GetScreenHeight() / 2 - 100, 200, 50);
                 RayGui.GuiButton(startRect, "Start");
 
-                var howToRect = new Rectangle((GetScreenWidth() / 2 - 100), GetScreenHeight() / 2, 200, 50);
-                RayGui.GuiButton(howToRect, "How to Play");
+                //var howToRect = new Rectangle((GetScreenWidth() / 2 - 100), GetScreenHeight() / 2, 200, 50);
+                //RayGui.GuiButton(howToRect, "How to Play");
+                var serverRect = new Rectangle((GetScreenWidth() / 2 - 100), GetScreenHeight() / 2, 200, 50);
+                RayGui.GuiButton(serverRect, "Host a Server");
 
-                var creditsRect = new Rectangle((GetScreenWidth() / 2 - 100), GetScreenHeight() / 2 + 100, 200, 50);
-                RayGui.GuiButton(creditsRect, "Credits");
+                // var creditsRect = new Rectangle((GetScreenWidth() / 2 - 100), GetScreenHeight() / 2 + 100, 200, 50);
+                // RayGui.GuiButton(creditsRect, "Credits");
+
+                var serverJoinRect = new Rectangle((GetScreenWidth() / 2 - 100), GetScreenHeight() / 2 + 100, 200, 50);
+                RayGui.GuiButton(serverJoinRect, "Join a Server");
 
                 var exitRect = new Rectangle((GetScreenWidth() / 2 - 100), GetScreenHeight() / 2 + 200, 200, 50);
                 RayGui.GuiButton(exitRect, "Exit");
@@ -46,14 +53,28 @@ namespace JustWind.Systems
                     {
                         singleton.State = GameState.Game;
                     }
-                    if (Raylib.CheckCollisionPointRec(mousePos, howToRect))
+                    if (Raylib.CheckCollisionPointRec(mousePos, serverRect))
                     {
-                        singleton.State = GameState.MenuHowToPlay;
+                        singleton.State = GameState.ServerHost;
+                        Engine.Network = new NetServer(Engine);
+                        Engine.NetworkThread = new Thread(() => Engine.Network.Start());
+                        Engine.NetworkThread.Start();
                     }
-                    if (Raylib.CheckCollisionPointRec(mousePos, creditsRect))
+                    if (Raylib.CheckCollisionPointRec(mousePos, serverJoinRect))
                     {
-                        singleton.State = GameState.MenuCredits;
+                        singleton.State = GameState.ServerJoin;
+                        Engine.Network = new NetClient(Engine);
+                        Engine.NetworkThread = new Thread(() => Engine.Network.Start());
+                        Engine.NetworkThread.Start();
                     }
+                    // if (Raylib.CheckCollisionPointRec(mousePos, howToRect))
+                    // {
+                    //     singleton.State = GameState.MenuHowToPlay;
+                    // }
+                    // if (Raylib.CheckCollisionPointRec(mousePos, creditsRect))
+                    // {
+                    //     singleton.State = GameState.MenuCredits;
+                    // }
                     if (Raylib.CheckCollisionPointRec(mousePos, exitRect))
                     {
                         singleton.State = GameState.Exit;
@@ -90,6 +111,25 @@ namespace JustWind.Systems
                     if (Raylib.CheckCollisionPointRec(mousePos, backRect))
                     {
                         singleton.State = GameState.Menu;
+                    }
+                }
+            }
+            if (singleton.State is GameState.ServerHost or GameState.ServerJoin)
+            {
+                var key = GetKeyPressed();
+                if (key > 0)
+                {
+                    var keyPress = GetCharPressed();
+                    if (keyPress > 0)
+                    {
+                        var keyPressed = (char)keyPress;
+                        message += keyPressed;
+                        Console.WriteLine($"{key}, {keyPressed}");
+                    }
+                    if (key == (int)KeyboardKey.KEY_ENTER)
+                    {
+                        this.Engine.Network.SendString(message);
+                        Console.WriteLine("entered");
                     }
                 }
             }
@@ -176,6 +216,11 @@ namespace JustWind.Systems
                     {
                         singleton.State = GameState.Game;
                         singleton.HouseSafety = singleton.MaxHouseSafety;
+                        singleton.LastSpawnTime = 0;
+                        singleton.Stats.Round = 1;
+                        singleton.Stats.RoundDuration = 90;
+                        singleton.Stats.RoundTimer = 0;
+
                     }
                     if (Raylib.CheckCollisionPointRec(mousePos, quitRect))
                     {

@@ -36,5 +36,7 @@ namespace JustWind.Components
         MenuCredits,
         Paused,
         Exit,
+        ServerHost,
+        ServerJoin,
     }
 }
